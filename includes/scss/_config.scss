@@ -3,29 +3,33 @@
 config
 =============== */
 
-$max-width:				1270px;
+$max-width:				1240px;
 $font-color:			#000000;
 $link-color:            #bf39f7;
 
 $primary-color:         #000000;
 $secondary-color:       #bf39f7;
+$ternary-color:         #ffffff;
 
-$font-size:				16px;
-$line-height:			20px;
+$font-size-origin:      16px;
+$line-height-origin:    18px;
 
-$font-size-sm:			14px;
-$line-height-sm:		20px;
+$font-size-sm:			0.75em;   //12
+$line-height-sm:		1em;
 
-$font-size-md:          25px;
-$line-height-md:        20px;
+$font-size:				1em;
+$line-height:			1em;
 
-$font-size-lg:          32px;
-$line-height-lg:        38px;
+$font-size-md:          1.25em;   //20
+$line-height-md:        1em;
 
-$font-size-xlg:         36px;
-$line-height-xlg:       38px;
+$font-size-lg:          2em;      //32
+$line-height-lg:        1em;
+
+$font-size-xlg:         2.15em;   //34
+$line-height-xlg:       1em;
 
 $font-stack:            Helvetica, Arial, sans-serif;
 
-$menu-max-width:        900px;
+$menu-max-width:        $max-width;
 $sub-menu-max-width:    200px;

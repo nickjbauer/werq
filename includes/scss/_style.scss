@@ -12,12 +12,15 @@ Style
 }
 
 body {
-  font-family: $font-stack;
-  font-size: $font-size;
-  color: $font-color;
-  line-height: $line-height;
 
-  a {
+  //reset skeleton
+  font-family: $font-stack;
+  font-size: $font-size-origin;
+  line-height: $line-height-origin;
+  color: $font-color;
+
+  a, a:hover {
+    font-size: $font-size;
     color: $link-color;
     text-decoration: none;
   }
@@ -28,23 +31,40 @@ body {
     padding:0;
   }
 
-    h1 {
-      font-size: $font-size-lg;
-      line-height: $line-height-lg;
-    }
+  h1 {
+    font-size: $font-size-lg;
+    line-height: $line-height-lg;
+  }
 
-    h2 {
-      font-size: $font-size-md;
-      line-height: $line-height-md;
-    }
+  h2 {
+    font-size: $font-size-md;
+    line-height: $line-height-md;
+  }
+
+  h3 {
+    font-size: 1.05em;
+    line-height: 1em;
+  }
 
   img {
     @include responsive-img;
   }
 
+
   //head
   header {
     background-color: $primary-color;
+    max-width: $max-width;
+    width: 100%;
+    margin:auto;
+    text-align:center;
+
+    #logo {
+      max-width: 765px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
     //nav
     nav {
       max-width: $max-width;
@@ -52,14 +72,9 @@ body {
       width:100%;
       text-align: center;
       background-color: $secondary-color;
-      @include debug2;
 
       .current-menu-parent>a, .current-menu-item a {
-        color: $primary-color;
-
-        &:hover {
-          color: #fff;
-        }
+        color: $ternary-color;
       }
     }
 
@@ -68,7 +83,6 @@ body {
       padding:0;
       max-width: $menu-max-width;
       width:100%;
-      @include debug5;
       line-height: 40px;
 
       li {
@@ -83,14 +97,14 @@ body {
 
         a {
           @include inline-block;
-          line-height: $line-height;
           padding:  0 15px;
-          color: #fff;
+          color: $ternary-color;
           text-decoration: none;
 
           &:hover {
             cursor: pointer;
             background-color: $primary-color;
+            color:$ternary-color;
           }
         }
 
@@ -138,7 +152,6 @@ body {
 
             a {
               display: block;
-              line-height: $line-height;
               text-transform: none;
               position: relative;
               z-index: 999999;
@@ -154,11 +167,36 @@ body {
     max-width: $max-width;
     margin: auto;
 
-    @include debug;
+    article {
+      padding: 25px 10px;
+    }
   }
 
   //footer
   footer {
+    font-size: $font-size-sm;
     text-align: center;
+  }
+
+  //custom
+  &.home {
+    h1 {
+      font-weight:normal;
+    }
+
+    aside {
+      text-align: center;
+      margin:auto;
+      max-width: $max-width;
+      display:block;
+
+      .columns {
+        color: $ternary-color;
+        background-color: $secondary-color;
+        width:100%;
+        max-width: 269px;
+        margin: 5px 20px;
+      }
+    }
   }
 }
