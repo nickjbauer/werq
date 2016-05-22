@@ -2,7 +2,14 @@
 <main role="main">
 <?php
 if (have_posts()) {
-  while (have_posts()) : the_post(); ?>
+
+  //feat. image
+  if (has_post_thumbnail()) {
+    the_post_thumbnail('full');
+  }
+
+  while (have_posts()) : the_post();
+    ?>
     <article>
       <?php the_content(); ?>
     </article>
@@ -16,7 +23,7 @@ if (have_posts()) {
     <?php
   endwhile;
 
-  if (is_front_page()):
+  if (is_front_page()) {
     ?>
     <aside>
       <div class="row">
@@ -24,7 +31,8 @@ if (have_posts()) {
           sign up for free
           <h3>WERQ<span>outs</span></h3>
 
-          <form method="post" action="//chicagofitnessparties.us2.list-manage.com/subscribe/post?u=9d46ac14124721f21e6c2bc55&id=8f2588374e">
+          <form method="post"
+                action="//chicagofitnessparties.us2.list-manage.com/subscribe/post?u=9d46ac14124721f21e6c2bc55&id=8f2588374e">
             <input type="email" placeholder="Email Address" name="EMAIL">
             <input type="submit" value="SUBMIT">
           </form>
@@ -45,7 +53,8 @@ if (have_posts()) {
           </form>
         </div>
         <div class="three columns callout col4">
-          <a href="//werqfitness.myshopify.com/" target="_blank"><img src="/wp-content/uploads/2016/05/btn_shop.jpg"></a>
+          <a href="//werqfitness.myshopify.com/" target="_blank"><img
+              src="/wp-content/uploads/2016/05/btn_shop.jpg"></a>
           <a href="#"><img src="/wp-content/uploads/2016/05/btn_class.jpg"></a>
         </div>
       </div>
@@ -64,7 +73,8 @@ if (have_posts()) {
             <img src="/wp-content/uploads/2016/05/ico-instyle.jpg" alt="InStyle" title="InStyle">
           </div>
           <div class="three columns seen col4">
-            <img src="/wp-content/uploads/2016/05/ico-idea.jpg" alt="Idea Health & Fitness Association" title="Idea Health & Fitness Association">
+            <img src="/wp-content/uploads/2016/05/ico-idea.jpg" alt="Idea Health & Fitness Association"
+                 title="Idea Health & Fitness Association">
           </div>
         </div>
       </div>
@@ -72,9 +82,14 @@ if (have_posts()) {
     </aside>
 
     <?php
-  endif;
+  } elseif (get_the_ID() == 41) { ?>
 
-}elseif (is_404()){ ?>
+    teach page
+
+    <?php
+  }
+
+} elseif (is_404()) { ?>
 
   <article>
     <h1>We're sorry...</h1>

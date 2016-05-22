@@ -11,6 +11,12 @@ Style
   visibility: hidden;
 }
 
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
 body {
 
   //reset skeleton
@@ -25,10 +31,13 @@ body {
     text-decoration: none;
   }
 
+
   h1, h2, h3, h4, h5, h6 {
     font-family: $font-stack;
+    font-weight: bold;
     margin:0;
     padding:0;
+    letter-spacing:0;
   }
 
   h1 {
@@ -46,6 +55,14 @@ body {
     line-height: 1em;
   }
 
+  h1 + table, h2 + table, h3 + table {
+    margin-top: -15px;
+  }
+
+  p + table {
+    margin-top: -25px;
+  }
+
   img {
     @include responsive-img;
   }
@@ -55,6 +72,10 @@ body {
   }
 
   input, textarea, select, fieldset {
+    margin-bottom: 1em;
+  }
+
+  pre, blockquote, dl, figure, table, p, ul, ol, form {
     margin-bottom: 1em;
   }
   
@@ -72,6 +93,15 @@ body {
     }
   }
 
+
+  /* contactform7 */
+  .ajax-loader {
+    max-width: 16px;
+  }
+
+  span.wpcf7-not-valid-tip {
+    color: #590000;
+  }
 
 
   //head
@@ -98,6 +128,7 @@ body {
 
       .current-menu-parent>a, .current-menu-item a {
         color: $primary-color;
+        font-weight:bold;
       }
     }
 
@@ -128,6 +159,7 @@ body {
             cursor: pointer;
             background-color: $primary-color;
             color:$ternary-color;
+            font-weight:normal
           }
         }
 
@@ -192,21 +224,36 @@ body {
     @include debug1();
 
     article {
-      padding: 25px 10px;
+      padding: 25px 30px 0 30px;
       @include debug();
     }
   }
 
   //footer
   footer {
-    margin-top: 25px;
+    margin-top: 35px;
     font-size: $font-size-sm;
     line-height: 2.25em;
     text-align: center;
-    background-color: $secondary-color;
     color: $ternary-color;
 
+    ul {
+      margin-bottom:0;
+      li {
+        margin-bottom:0;
+        @include inline-block;
+        img {
+          width: 35px;
+
+          &.alignnone {
+            margin-bottom:10px;
+          }
+        }
+      }
+    }
+
     p {
+      background-color: $secondary-color;
       margin:0;
     }
 
@@ -215,7 +262,14 @@ body {
     }
   }
 
-  //custom
+  //404
+  &.error404 {
+    article {
+      text-align:center;
+    }
+  }
+
+  //home
   &.home {
     h1 {
       font-weight:normal;
@@ -241,6 +295,7 @@ body {
             font-size: $font-size-xlg;
             font-family: $font-stack-2;
             color: $primary-color;
+            font-weight: normal;
 
             span {
               font-family: $font-stack;
@@ -278,10 +333,10 @@ body {
         }
 
         &.seen {
-          margin: 2em;
+          margin: 2em 2em 0 2em;
           &.col1 { width: 173px; }
           &.col2 { width: 166px; }
-          &.col3 { width: 200px; }
+          &.col3 { width: 200px; padding-top: 7px; }
           &.col4 {
             width: 92px;
             margin-top: 10px;
@@ -298,6 +353,27 @@ body {
           margin:auto;
         }
       }
+    }
+  }
+
+  //contact
+  &.page-id-49 {
+    form {
+      background-color: $secondary-color;
+      padding: 25px;
+      color: $ternary-color;
+
+      input[type=text], input[type=email], textarea, select {
+        margin-top: 5px;
+        color: $primary-color;
+      }
+    }
+  }
+
+  //about
+  &.page-id-47 {
+    th, td {
+      border-bottom: none;
     }
   }
 }

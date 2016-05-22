@@ -91,17 +91,18 @@ function prefix_add_my_stylesheet() {
 
 /*	TINYMCE
 //http://www.wpexplorer.com/wordpress-tinymce-tweaks/
-
+*/
 
 // Add custom Fonts to the Fonts list
 if ( ! function_exists( 'wpex_mce_google_fonts_array' ) ) {
     function wpex_mce_google_fonts_array( $initArray ) {
-        $initArray['font_formats'] = 'Lato=Lato;Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats';
+        $initArray['font_formats'] = '*Philly Sans=PhillySans, Arial, sans-serif;Lato=Lato;Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats';
             return $initArray;
     }
 }
 add_filter( 'tiny_mce_before_init', 'wpex_mce_google_fonts_array' );
 
+/*
 // Add Google Scripts for use with the editor
 if ( ! function_exists( 'wpex_mce_google_fonts_styles' ) ) {
 
@@ -124,7 +125,7 @@ if ( ! function_exists( 'wpex_mce_buttons' ) ) {
         return $buttons;
     }
 }
-
+*/
 
 function my_mce4_options( $init ) {
 $default_colours = '
@@ -135,15 +136,15 @@ $default_colours = '
     "FF99CC", "Pink",         "FFCC99", "Peach",        "FFFF99", "Light yellow", "CCFFCC", "Pale green",   "CCFFFF", "Pale cyan",    "99CCFF", "Light sky blue", "CC99FF", "Plum",         "FFFFFF", "White"
 ';
 $custom_colours = '
-	"cc9966", "Link Color"
-	,"330000", "Dark Brown Color"
+	"bf39f7", "WERQ Purple",
 ';
 $init['textcolor_map'] = '['.$default_colours.','.$custom_colours.']'; // build colour grid default+custom colors
 $init['textcolor_rows'] = 6; // enable 6th row for custom colours in grid
 return $init;
 }
+
 add_filter('tiny_mce_before_init', 'my_mce4_options');
-*/
+
 
 /* BOOTSTRAP MODS 
 //auto add img-responsive to all images added via the wp post

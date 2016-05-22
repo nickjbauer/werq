@@ -13,7 +13,6 @@ TODO
 ==========
 - security plugins to hide
 - change email in settings
-- delete if necessary functions.php widgetareas
 - style custom fonts and colors into tinymce
 - final css compression
 - check 404
@@ -21,6 +20,12 @@ TODO
 ==========
 PLUGINS
 ==========
-- automatic plugin update
-- backup buddy
 - media replace
+- tinymce advanced
+- WYSIWYG Widgets / Widget Blocks
+- contact form 7
+- toolset types
+
+
+- backup buddy
+- automatic plugin update
