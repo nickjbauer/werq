@@ -82,11 +82,73 @@ if (have_posts()) {
     </aside>
 
     <?php
-  } elseif (get_the_ID() == 41) { ?>
+  } elseif (get_the_ID() == 41) {
 
-    teach page
+    wp_reset_query();
 
-    <?php
+    $args = array(
+
+      'post_type' 		=> 'teach-werq',
+      'posts_per_page' 	=> -1,
+      'meta_key' => 'wpcf-teach-end-date',
+      'orderby' => 'meta_value',
+      'order' => 'DESC'
+    );
+
+    $loop = new WP_Query($args);
+
+    while ( $loop->have_posts() ) {
+      print_r($loop->the_post());
+
+      $id = get_the_ID();
+      $title = get_the_title();
+      $address = get_post_meta($id, 'wpcf-teach-address', true);
+      $state = get_post_meta($id, 'wpcf-teach-state', true);
+      $url = get_post_meta($id, 'wpcf-teach-url', true);
+
+      $start_date = date('m/d/Y',get_post_meta($id, 'wpcf-teach-start-date', true));
+      $start_time = date('g:i A',get_post_meta($id, 'wpcf-teach-start-date', true));
+      $end_date = date('m/d/Y',get_post_meta($id, 'wpcf-teach-end-date', true));
+      $end_time = date('g:i A',get_post_meta($id, 'wpcf-teach-start-date', true));
+
+      $date_output_str = '';
+      //determine date logic
+      if ($start_date == $end_date) {
+        //same day
+        if (date('g:i A',get_post_meta($id, 'wpcf-teach-start-date', true)) == date('g:i A',get_post_meta($id, 'wpcf-teach-end-date', true))) {
+          //same time
+          $date_output_str = date('D, F jS Y',get_post_meta($id, 'wpcf-teach-start-date', true)).' | '. date('g:i A',get_post_meta($id, 'wpcf-teach-start-date', true));
+        } else {
+          $date_output_str = date('D, F jS Y',get_post_meta($id, 'wpcf-teach-start-date', true)).' | '. date('g:i A',get_post_meta($id, 'wpcf-teach-start-date', true)). '-' .date('g:i A',get_post_meta($id, 'wpcf-teach-end-date', true)) ;
+        }
+      } else {
+        //diff day
+        $date_output_str = date('D, F jS Y g:i A',get_post_meta($id, 'wpcf-teach-start-date', true)). ' - '. date('D, F jS Y g:i A',get_post_meta($id, 'wpcf-teach-end-date', true));
+      }
+
+
+
+
+
+      echo get_the_title().'<br>';
+      echo date('D, F jS Y g:i A',get_post_meta($id, 'wpcf-teach-start-date', true)).'<br>';
+      echo date('D, F jS Y g:i A',get_post_meta($id, 'wpcf-teach-end-date', true)).'<br>';
+      echo $start_date.' '.$start_time.' - '.$end_date.' '.$end_time.'<br>';
+      echo get_post_meta($id, 'wpcf-teach-address', true).'<br>';
+      echo get_post_meta($id, 'wpcf-teach-state', true).'<br>';
+      echo get_post_meta($id, 'wpcf-teach-url', true).'<br>';
+      echo $date_output_str.'<br>';
+
+      echo '<hr>';
+
+      //$list = get_the_terms($id, 'eab_events_category');
+      //$start = get_post_meta($id, 'incsub_event_start', true);
+      //$end = get_post_meta($id, 'incsub_event_end', true);
+      //$now = date('Y-m-d H:i:s');
+    }
+
+
+    echo 'done';
   }
 
 } elseif (is_404()) { ?>

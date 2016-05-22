@@ -12,10 +12,11 @@ http://unminify.com/
 TODO
 ==========
 - security plugins to hide
-- change email in settings
-- style custom fonts and colors into tinymce
+- change email in settings, contact form
 - final css compression
-- check 404
+- link on meet, teach, home
+- meet real data
+- teach faq, real data
 
 ==========
 PLUGINS
