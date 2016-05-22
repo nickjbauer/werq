@@ -50,6 +50,29 @@ body {
     @include responsive-img;
   }
 
+  input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="text"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+    border-color: $secondary-color;
+  }
+
+  input, textarea, select, fieldset {
+    margin-bottom: 1em;
+  }
+  
+  input[type=submit] {
+    width:133px;
+    height: 51px;
+    font-size:$font-size;
+    font-family: $font-stack-2;
+    color: $ternary-color;
+    border:none;
+    background-image: url("/wp-content/uploads/2016/05/submit_btn_bg.png");
+
+    &:hover {
+      color: $secondary-color; 
+    }
+  }
+
+
 
   //head
   header {
@@ -74,7 +97,7 @@ body {
       background-color: $secondary-color;
 
       .current-menu-parent>a, .current-menu-item a {
-        color: $ternary-color;
+        color: $primary-color;
       }
     }
 
@@ -166,16 +189,30 @@ body {
   main {
     max-width: $max-width;
     margin: auto;
+    @include debug1();
 
     article {
       padding: 25px 10px;
+      @include debug();
     }
   }
 
   //footer
   footer {
+    margin-top: 25px;
     font-size: $font-size-sm;
+    line-height: 2.25em;
     text-align: center;
+    background-color: $secondary-color;
+    color: $ternary-color;
+
+    p {
+      margin:0;
+    }
+
+    a, a:hover {
+      color: $ternary-color;
+    }
   }
 
   //custom
@@ -188,14 +225,78 @@ body {
       text-align: center;
       margin:auto;
       max-width: $max-width;
-      display:block;
 
       .columns {
-        color: $ternary-color;
-        background-color: $secondary-color;
-        width:100%;
-        max-width: 269px;
-        margin: 5px 20px;
+        &.callout {
+          width: 100%;
+          max-width: 269px;
+          color: $ternary-color;
+          background-color: $secondary-color;
+          padding: 25px 20px;
+          height: 254px;
+          font-size: $font-size-md;
+          margin: 5px 20px;
+
+          h3 {
+            font-size: $font-size-xlg;
+            font-family: $font-stack-2;
+            color: $primary-color;
+
+            span {
+              font-family: $font-stack;
+              font-size: $font-size-sm;
+            }
+          }
+
+          &.col1 {
+            padding-top: 30px;
+
+            input[type=email] {
+              width: 220px;
+            }
+          }
+
+          &.col2, &.col3 {
+            form {
+              display: block;
+              margin-top: 1em;
+            }
+          }
+
+          &.col2 {
+            padding-top: 45px;
+          }
+
+          &.col3 {
+            padding-top: 50px;
+          }
+
+          &.col4 {
+            padding: 0;
+            background-color: $ternary-color;
+          }
+        }
+
+        &.seen {
+          margin: 2em;
+          &.col1 { width: 173px; }
+          &.col2 { width: 166px; }
+          &.col3 { width: 200px; }
+          &.col4 {
+            width: 92px;
+            margin-top: 10px;
+          }
+        }
+      }
+
+      #seen_col {
+        margin-top: 2em;
+
+        .row {
+          max-width: 900px;
+          width: 100%;
+          margin:auto;
+        }
       }
     }
   }

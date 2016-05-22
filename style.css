@@ -25,15 +25,13 @@ http://www.freefontconverter.com/
 	font-weight: normal;
 	font-style: normal;
 }
-
-@font-face {
-	font-family: 'HelveticaNeueBoldCond';
-	src: url('/includes/fonts/HelveticaNeueLTStd-BdCn.eot');
-	src: local('â˜º'), url('includes/fonts/HelveticaNeueLTStd-BdCn.woff') format('woff'), url('includes/fonts/HelveticaNeueLTStd-BdCn.ttf') format('truetype'), url('includes/fonts/HelveticaNeueLTStd-BdCn.svg') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
 */
+@font-face {
+  font-family: 'PhillySans';
+  src: url("includes/fonts/PhillySans.eot");
+  src: local("â˜º"), url("includes/fonts/PhillySans.woff") format("woff"), url("includes/fonts/PhillySans.ttf") format("truetype"), url("includes/fonts/PhillySans.svg") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 /* normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 /**
  * 1. Set default font family to sans-serif.
@@ -998,6 +996,20 @@ body {
   body img {
     width: 100%;
     height: auto; }
+  body input[type="email"]:focus, body input[type="number"]:focus, body input[type="search"]:focus, body input[type="text"]:focus, body input[type="tel"]:focus, body input[type="url"]:focus, body input[type="password"]:focus, body textarea:focus, body select:focus {
+    border-color: #bf39f7; }
+  body input, body textarea, body select, body fieldset {
+    margin-bottom: 1em; }
+  body input[type=submit] {
+    width: 133px;
+    height: 51px;
+    font-size: 1em;
+    font-family: PhillySans, Arial, sans-serif;
+    color: #ffffff;
+    border: none;
+    background-image: url("/wp-content/uploads/2016/05/submit_btn_bg.png"); }
+    body input[type=submit]:hover {
+      color: #bf39f7; }
   body header {
     background-color: #000000;
     max-width: 1240px;
@@ -1015,7 +1027,7 @@ body {
       text-align: center;
       background-color: #bf39f7; }
       body header nav .current-menu-parent > a, body header nav .current-menu-item a {
-        color: #ffffff; }
+        color: #000000; }
     body header nav ul {
       margin: 0 auto;
       padding: 0;
@@ -1084,25 +1096,77 @@ body {
               z-index: 999999; }
   body main {
     max-width: 1240px;
-    margin: auto; }
+    margin: auto;
+    border: thin solid #7FFF00;
+    /* neon green */ }
     body main article {
-      padding: 25px 10px; }
+      padding: 25px 10px;
+      border: thin solid #FF0000;
+      /* red */ }
   body footer {
+    margin-top: 25px;
     font-size: 0.75em;
-    text-align: center; }
+    line-height: 2.25em;
+    text-align: center;
+    background-color: #bf39f7;
+    color: #ffffff; }
+    body footer p {
+      margin: 0; }
+    body footer a, body footer a:hover {
+      color: #ffffff; }
   body.home h1 {
     font-weight: normal; }
   body.home aside {
     text-align: center;
     margin: auto;
-    max-width: 1240px;
-    display: block; }
-    body.home aside .columns {
-      color: #ffffff;
-      background-color: #bf39f7;
+    max-width: 1240px; }
+    body.home aside .columns.callout {
       width: 100%;
       max-width: 269px;
+      color: #ffffff;
+      background-color: #bf39f7;
+      padding: 25px 20px;
+      height: 254px;
+      font-size: 1.25em;
       margin: 5px 20px; }
+      body.home aside .columns.callout h3 {
+        font-size: 3em;
+        font-family: PhillySans, Arial, sans-serif;
+        color: #000000; }
+        body.home aside .columns.callout h3 span {
+          font-family: Helvetica, Arial, sans-serif;
+          font-size: 0.75em; }
+      body.home aside .columns.callout.col1 {
+        padding-top: 30px; }
+        body.home aside .columns.callout.col1 input[type=email] {
+          width: 220px; }
+      body.home aside .columns.callout.col2 form, body.home aside .columns.callout.col3 form {
+        display: block;
+        margin-top: 1em; }
+      body.home aside .columns.callout.col2 {
+        padding-top: 45px; }
+      body.home aside .columns.callout.col3 {
+        padding-top: 50px; }
+      body.home aside .columns.callout.col4 {
+        padding: 0;
+        background-color: #ffffff; }
+    body.home aside .columns.seen {
+      margin: 2em; }
+      body.home aside .columns.seen.col1 {
+        width: 173px; }
+      body.home aside .columns.seen.col2 {
+        width: 166px; }
+      body.home aside .columns.seen.col3 {
+        width: 200px; }
+      body.home aside .columns.seen.col4 {
+        width: 92px;
+        margin-top: 10px; }
+    body.home aside #seen_col {
+      margin-top: 2em; }
+      body.home aside #seen_col .row {
+        max-width: 900px;
+        width: 100%;
+        margin: auto; }
 
 /*
 ===============

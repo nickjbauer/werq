@@ -25,15 +25,16 @@ http://www.freefontconverter.com/
 	font-weight: normal;
 	font-style: normal;
 }
+*/
 
 @font-face {
-	font-family: 'HelveticaNeueBoldCond';
-	src: url('/includes/fonts/HelveticaNeueLTStd-BdCn.eot');
-	src: local('â˜º'), url('includes/fonts/HelveticaNeueLTStd-BdCn.woff') format('woff'), url('includes/fonts/HelveticaNeueLTStd-BdCn.ttf') format('truetype'), url('includes/fonts/HelveticaNeueLTStd-BdCn.svg') format('svg');
+	font-family: 'PhillySans';
+	src: url('includes/fonts/PhillySans.eot');
+	src: local('â˜º'), url('includes/fonts/PhillySans.woff') format('woff'), url('includes/fonts/PhillySans.ttf') format('truetype'), url('includes/fonts/PhillySans.svg') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
-*/
+
 
 //3rd party
 @import 'normalize';
