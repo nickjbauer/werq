@@ -404,6 +404,30 @@ body {
     }
   }
 
+  //events
+  &.page-id-43 {
+    aside {
+      background-color: $primary-color;
+      color: $ternary-color;
+      padding: 1em;
+
+      h3 {
+        font-size: $font-size-md;
+        font-weight:normal;
+        text-align: center;
+      }
+
+      ul {
+        margin-top: 10px;
+        margin-bottom:0;
+        list-style: none;
+
+        li:last-child {
+          margin-bottom:0;
+        }
+      }
+    }
+  }
 
   //event table
   table.event_table {

@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <main role="main">
-  
+
 <?php
   if (have_posts()) {
 

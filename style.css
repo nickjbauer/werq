@@ -1229,6 +1229,20 @@ body {
   body.page-id-41 h2 {
     text-align: center;
     line-height: 2em; }
+  body.page-id-43 aside {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 1em; }
+    body.page-id-43 aside h3 {
+      font-size: 1.25em;
+      font-weight: normal;
+      text-align: center; }
+    body.page-id-43 aside ul {
+      margin-top: 10px;
+      margin-bottom: 0;
+      list-style: none; }
+      body.page-id-43 aside ul li:last-child {
+        margin-bottom: 0; }
   body table.event_table {
     width: 95%;
     margin: auto; }

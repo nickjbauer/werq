@@ -23,7 +23,7 @@ $navmenus = array(
 
 //widget areas
 $widgetareas = array(
-	'Sidebar', 'Footer'
+	'Blog Sidebar', 'Footer'
 );
 
  

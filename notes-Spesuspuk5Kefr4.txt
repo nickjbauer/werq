@@ -30,6 +30,7 @@ PLUGINS
 - WYSIWYG Widgets / Widget Blocks
 - contact form 7
 - toolset types
+- nextgen
 
 
 - backup buddy
