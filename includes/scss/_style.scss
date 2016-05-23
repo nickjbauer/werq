@@ -103,6 +103,21 @@ body {
     color: #590000;
   }
 
+  //youtube video
+  .videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+  }
+  .videoWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
 
   //head
   header {
@@ -376,4 +391,40 @@ body {
       border-bottom: none;
     }
   }
+
+  //teach
+  &.page-id-41 {
+    table + h2 {
+      margin-top: 2em;
+    }
+
+    h2 {
+      text-align: center;
+      line-height: 2em;
+    }
+  }
+
+
+  //event table
+  table.event_table {
+    width: 95%;
+    margin:auto;
+
+    .register {
+      @include gradient-bg();
+      color: $ternary-color;
+      text-align: center;
+      max-width: 139px;
+      width: 100%;
+      border: thin solid $primary-color;
+      line-height: 2em;
+
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+
+
+  }
+
 }

@@ -36,13 +36,13 @@ mixins
 }
 
 @mixin gradient-bg {
-  background: #f8efe0;
-  background: -moz-linear-gradient(top, #f8efe0 0%, #d5a951 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f8efe0), color-stop(100%, #d5a951));
-  background: -webkit-linear-gradient(top, #f8efe0 0%, #d5a951 100%);
-  background: -o-linear-gradient(top, #f8efe0 0%, #d5a951 100%);
-  background: -ms-linear-gradient(top, #f8efe0 0%, #d5a951 100%);
-  background: linear-gradient(top, #f8efe0 0%, #d5a951 100%);
+  background: #bf20fa;
+  background: -moz-linear-gradient(top, #bf20fa 0%, #020202 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bf20fa), color-stop(100%, #020202));
+  background: -webkit-linear-gradient(top, #bf20fa 0%, #020202 100%);
+  background: -o-linear-gradient(top, #bf20fa 0%, #020202 100%);
+  background: -ms-linear-gradient(top, #bf20fa 0%, #020202 100%);
+  background: linear-gradient(top, #bf20fa 0%, #020202 100%);
 }
 
 @mixin list-blocks($class:list_blocks) {

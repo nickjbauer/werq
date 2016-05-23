@@ -1028,6 +1028,18 @@ body {
     max-width: 16px; }
   body span.wpcf7-not-valid-tip {
     color: #590000; }
+  body .videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+    padding-top: 25px;
+    height: 0; }
+  body .videoWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; }
   body header {
     background-color: #000000;
     max-width: 1240px;
@@ -1212,6 +1224,30 @@ body {
       color: #000000; }
   body.page-id-47 th, body.page-id-47 td {
     border-bottom: none; }
+  body.page-id-41 table + h2 {
+    margin-top: 2em; }
+  body.page-id-41 h2 {
+    text-align: center;
+    line-height: 2em; }
+  body table.event_table {
+    width: 95%;
+    margin: auto; }
+    body table.event_table .register {
+      background: #bf20fa;
+      background: -moz-linear-gradient(top, #bf20fa 0%, #020202 100%);
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bf20fa), color-stop(100%, #020202));
+      background: -webkit-linear-gradient(top, #bf20fa 0%, #020202 100%);
+      background: -o-linear-gradient(top, #bf20fa 0%, #020202 100%);
+      background: -ms-linear-gradient(top, #bf20fa 0%, #020202 100%);
+      background: linear-gradient(top, #bf20fa 0%, #020202 100%);
+      color: #ffffff;
+      text-align: center;
+      max-width: 139px;
+      width: 100%;
+      border: thin solid #000000;
+      line-height: 2em; }
+      body table.event_table .register:hover {
+        color: #bf39f7; }
 
 /*
 ===============

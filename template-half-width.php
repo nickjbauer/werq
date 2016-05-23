@@ -10,10 +10,7 @@ get_header();
  <?php
   if (have_posts()) {
 
-    //feat. image
-    if ( has_post_thumbnail() ) {
-      the_post_thumbnail('full');
-    }
+    get_template_part( 'partials', 'head' );
 
     while (have_posts()) : the_post();
   ?>
