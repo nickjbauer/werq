@@ -1,5 +1,21 @@
 <?php
 
+function my_output_date ($unix_start, $unix_end) {
+  //determine date logic
+  if ($unix_start == $unix_end) {
+	//same day and time
+	return date('D, F jS Y',$unix_start).'<br>'. date('g:i A',$unix_start);
+  } else {
+	if (date('m/d/Y',$unix_start) == date('m/d/Y',$unix_end)) {
+	  //same day
+	  return date('D, F jS Y',$unix_start).'<br>'. date('g:i A',$unix_start). ' to ' .date('g:i A',$unix_end);
+	} else {
+	  //diff day
+	  return date('D, F jS Y g:i A',$unix_start). ' thru <br>'. date('D, F jS Y g:i A',$unix_end);
+	}
+  }
+}
+
 //nav menus
 $navmenus = array(
 	'Main Menu'

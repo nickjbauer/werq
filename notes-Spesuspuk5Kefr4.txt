@@ -8,6 +8,10 @@ font-family: 'Raleway', sans-serif;Raleway', Verdana, Geneva, sans-serif;
 
 http://minifycode.com/html-minifier/
 http://unminify.com/
+
+- special function in functions.php to output nice string based on start and end date
+
+
 ==========
 TODO
 ==========

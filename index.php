@@ -111,20 +111,8 @@ if (have_posts()) {
       $end_date = date('m/d/Y',get_post_meta($id, 'wpcf-teach-end-date', true));
       $end_time = date('g:i A',get_post_meta($id, 'wpcf-teach-start-date', true));
 
-      $date_output_str = '';
-      //determine date logic
-      if ($start_date == $end_date) {
-        //same day
-        if (date('g:i A',get_post_meta($id, 'wpcf-teach-start-date', true)) == date('g:i A',get_post_meta($id, 'wpcf-teach-end-date', true))) {
-          //same time
-          $date_output_str = date('D, F jS Y',get_post_meta($id, 'wpcf-teach-start-date', true)).' | '. date('g:i A',get_post_meta($id, 'wpcf-teach-start-date', true));
-        } else {
-          $date_output_str = date('D, F jS Y',get_post_meta($id, 'wpcf-teach-start-date', true)).' | '. date('g:i A',get_post_meta($id, 'wpcf-teach-start-date', true)). '-' .date('g:i A',get_post_meta($id, 'wpcf-teach-end-date', true)) ;
-        }
-      } else {
-        //diff day
-        $date_output_str = date('D, F jS Y g:i A',get_post_meta($id, 'wpcf-teach-start-date', true)). ' - '. date('D, F jS Y g:i A',get_post_meta($id, 'wpcf-teach-end-date', true));
-      }
+      $date_output_str = my_output_date(get_post_meta($id, 'wpcf-teach-start-date', true),get_post_meta($id, 'wpcf-teach-end-date', true));
+
 
 
 
