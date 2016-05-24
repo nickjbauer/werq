@@ -1040,6 +1040,15 @@ body {
     left: 0;
     width: 100%;
     height: 100%; }
+  body .ngg-gallery-thumbnail img {
+    border: none;
+    padding: 3px;
+    margin: 3px; }
+    body .ngg-gallery-thumbnail img:hover {
+      background-color: #bf39f7; }
+  body .ngg-gallery-thumbnail-box {
+    padding: 0px;
+    margin: 5px 19px; }
   body header {
     background-color: #000000;
     max-width: 1240px;
@@ -1262,6 +1271,8 @@ body {
       line-height: 2em; }
       body table.event_table .register:hover {
         color: #bf39f7; }
+  body.page-id-152 #back {
+    margin-top: 1em; }
 
 /*
 ===============

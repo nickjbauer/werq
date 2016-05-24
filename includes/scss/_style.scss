@@ -118,6 +118,22 @@ body {
     height: 100%;
   }
 
+  //nextgen
+  .ngg-gallery-thumbnail img {
+    border: none;
+    padding:3px;
+    margin:3px;
+
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+
+  .ngg-gallery-thumbnail-box {
+    padding:0px;
+    margin:5px 19px;
+  }
+
 
   //head
   header {
@@ -447,8 +463,13 @@ body {
         color: $secondary-color;
       }
     }
+  }
 
-
+  //event photo viewer
+  &.page-id-152 {
+    #back {
+      margin-top: 1em;
+    }
   }
 
 }

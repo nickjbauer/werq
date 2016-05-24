@@ -55,7 +55,7 @@ get_header();
                   <?= $thead ?>
                 </tr>
 
-                <?
+                <?php
                 wp_reset_query();
 
                 $args = array(
@@ -102,7 +102,6 @@ get_header();
                         <td><?= (!empty($city)) ? $city : ''; ?></td>
                         <td><?= (!empty($state)) ? $state : ''; ?></td>
                         <td><?= (!empty($url)) ? '<a href="' . $url . '" target="_blank"><div class="register">Register Now</div></a>' : ''; ?></td>
-
                     <?
                       break;
                     }
@@ -118,11 +117,25 @@ get_header();
                   <aside>
                     <h3>EVENT PHOTO GALLERY</h3>
                     <ul id="event_photo_gallery_listing">
-                      <li><a href="#">List 1</a></li>
-                      <li><a href="#">List 2</a></li>
-                      <li><a href="#">List 3</a></li>
-                      <li><a href="#">List 4</a></li>
-                      <li><a href="#">List 5</a></li>
+                      <?php
+                        wp_reset_query();
+
+                        $args = array(
+                          'post_type' => 'event-photo-listing',
+                          'posts_per_page' => -1,
+                          'order' => 'DESC'
+                        );
+
+                        $loop = new WP_Query($args);
+
+                        while ($loop->have_posts()) {
+                          $loop->the_post();
+
+                          $id = get_the_ID();
+                          $title = get_the_title();
+                      ?>
+                      <li><a href="/photo-gallery-viewer/?id=<?=$id?>"><?=$title?></a></li>
+                    <?php } ?>
                     </ul>
                   </aside>
                 </div>
