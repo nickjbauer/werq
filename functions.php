@@ -65,7 +65,7 @@ function my_body_class_names( $classes ) {
   $classes[] ='';
 
   // add 'class-name' to the $classes array
-  if (my_blog_page) {
+  if (my_blog_page()) {
     $classes[] = 'blog_pages';
   }
   // return the $classes array
@@ -80,7 +80,7 @@ $navmenus = array(
 
 //widget areas
 $widgetareas = array(
-	'Blog Sidebar', 'Footer', 'No Results'
+	'Blog Sidebar', 'Footer', 'No Results', 'Blog Header Image'
 );
 
 
