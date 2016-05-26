@@ -472,4 +472,38 @@ body {
     }
   }
 
+  //blog pages
+  &.blog_pages {
+    header {
+      background-color: $ternary-color;
+    }
+
+    article {
+      word-wrap: break-word;
+
+      .columns {
+        word-wrap: break-word;
+      }
+
+      .blog_read_more {
+        display:block;
+        margin-top: .5em;
+      }
+    }
+
+    .crop {
+      height: 100%;
+      width: 100%;
+      max-width: 250px;
+      max-height: 250px;
+      overflow:hidden;
+      line-height: 250px;
+      border: thin solid #D1D1D1;
+
+      img {
+        vertical-align: middle;
+      }
+    }
+  }
+
 }

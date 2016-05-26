@@ -1,5 +1,27 @@
 <?php
 
+//grab first image from post, and set to https
+function my_catch_that_image() {
+  global $post;
+
+  ob_start();
+  ob_end_clean();
+  preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+  $first_img = $matches[1][0];
+
+  if(empty($first_img)) {
+    $first_img = "/wp-content/uploads/2016/05/blog_default_img.jpg";
+  }
+  return preg_replace("(^https?://)", "https://",$first_img);
+}
+
+function my_new_excerpt_more() {
+  global $post;
+  return '<a class="blog_read_more" href="'. get_permalink($post->ID) . '"> Continue Reading &raquo;</a>';
+}
+add_filter('excerpt_more', 'my_new_excerpt_more');
+
+//output sexy date output string
 function my_output_date ($unix_start, $unix_end) {
   //determine date logic
   if ($unix_start == $unix_end) {
@@ -16,6 +38,41 @@ function my_output_date ($unix_start, $unix_end) {
   }
 }
 
+//determine if a page is a blog type page
+function my_blog_page () {
+  //determine if blog type page
+  if (is_home() || is_single() || is_search() || is_archive()) {
+	return true;
+  }
+
+  return false;
+}
+
+//return blog post only for search
+function my_search_blog_post_only( $query ) {
+  if ( $query->is_search ) {
+    $query->set( 'post_type', array('post') );
+  }
+  return $query;
+}
+add_filter('pre_get_posts','my_search_blog_post_only');
+
+
+// Add specific CSS class by filter
+add_filter( 'body_class', 'my_body_class_names' );
+function my_body_class_names( $classes ) {
+
+  $classes[] ='';
+
+  // add 'class-name' to the $classes array
+  if (my_blog_page) {
+    $classes[] = 'blog_pages';
+  }
+  // return the $classes array
+  return $classes;
+}
+
+
 //nav menus
 $navmenus = array(
 	'Main Menu'
@@ -23,10 +80,9 @@ $navmenus = array(
 
 //widget areas
 $widgetareas = array(
-	'Blog Sidebar', 'Footer'
+	'Blog Sidebar', 'Footer', 'No Results'
 );
 
- 
 
 //enable theme features
 add_theme_support('menus'); //enable menus

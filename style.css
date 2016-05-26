@@ -1273,6 +1273,25 @@ body {
         color: #bf39f7; }
   body.page-id-152 #back {
     margin-top: 1em; }
+  body.blog_pages header {
+    background-color: #ffffff; }
+  body.blog_pages article {
+    word-wrap: break-word; }
+    body.blog_pages article .columns {
+      word-wrap: break-word; }
+    body.blog_pages article .blog_read_more {
+      display: block;
+      margin-top: .5em; }
+  body.blog_pages .crop {
+    height: 100%;
+    width: 100%;
+    max-width: 250px;
+    max-height: 250px;
+    overflow: hidden;
+    line-height: 250px;
+    border: thin solid #D1D1D1; }
+    body.blog_pages .crop img {
+      vertical-align: middle; }
 
 /*
 ===============

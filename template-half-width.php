@@ -12,7 +12,7 @@ get_header();
 
     get_template_part( 'partials', 'head' );
 
-    while (have_posts()) : the_post();
+    the_post();
   ?>
     <article>
       <?php
@@ -35,7 +35,6 @@ get_header();
       ?>
     </article>
 <?php
-    endwhile;
   }
 ?>
 </main>

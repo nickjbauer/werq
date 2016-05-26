@@ -1,4 +1,4 @@
 <?php
 
-dynamic_sidebar('Sidebar');
+dynamic_sidebar('Blog Sidebar');
 

@@ -46,7 +46,7 @@
                   get_template_part( 'partials','404' );
               }
             ?>
-            <div id="back"><a href="/events">< Back To Events</a></div>
+            <div id="back"><a href="/events">&laquo; Back To Events</a></div>
           </div>
         </div>
     </article>

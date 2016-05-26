@@ -2,15 +2,11 @@
 NOTES
 ==========
 
-
-<link href='https://fonts.googleapis.com/css?family=Raleway:300,300italic,600,600italic,400italic,400' rel='stylesheet' type='text/css'>
-font-family: 'Raleway', sans-serif;Raleway', Verdana, Geneva, sans-serif;
-
-http://minifycode.com/html-minifier/
-http://unminify.com/
-
-- special function in functions.php to output nice string based on start and end date
-
+- my_output_date - output nice string based on start and end date
+- my_blog_page - determine if its a blog type page
+- my_search_blog_post_only - modify search to only return blog post results
+- my_body_class_names - filter to append blog_pages to the body class if its a blog type page
+- my_catch_that_image - grab first image from post
 
 ==========
 TODO
