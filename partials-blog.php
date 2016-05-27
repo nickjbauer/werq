@@ -16,7 +16,6 @@
           elseif (is_single()) {
             echo the_title();
           }
-
         ?></h1>
 
     <?php
@@ -28,7 +27,7 @@
         the_post();
     ?>
         <div class="four columns">
-          <div class="feat_img">
+          <div class="feat_img crop">
             <a href="<?= the_permalink() ?>">
             <?php
             if ( strlen( $img = get_the_post_thumbnail( get_the_ID(), 'medium' ) ) )  {
@@ -39,7 +38,7 @@
               $first_post_img = my_catch_that_image();
 
               if (!empty($first_post_img)) {
-                echo '<div class="crop"><img src="'.$first_post_img.'" class="attachment-medium size-medium wp-post-image feat_img"></div>';
+                echo '<img src="'.$first_post_img.'" class="attachment-medium size-medium wp-post-image feat_img">';
               }
             }
             ?>
@@ -71,10 +70,12 @@
       echo '</div>';
 
       //more link
-      echo '<hr>';
-      echo '<div  class="page-link">';
-      echo posts_nav_link('<span class="page-link-spacer">&bull;</span>','&laquo; Newer posts  ','  Older posts &raquo;');
-      echo '</div>';
+      if (!is_single()) {
+        echo '<hr>';
+        echo '<div  class="page-link">';
+        echo posts_nav_link('<span class="page-link-spacer">&bull;</span>', '&laquo; Newer posts  ', '  Older posts &raquo;');
+        echo '</div>';
+      }
 
     } else { ?>
       <h3>Sorry search result for "<?=htmlspecialchars($_GET["s"])?>" returns no results.</h3>
