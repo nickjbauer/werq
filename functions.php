@@ -1,19 +1,19 @@
 <?php
 
 //grab first image from post, and set to https
-function my_catch_that_image() {
-  global $post;
-
-  ob_start();
-  ob_end_clean();
-  preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
-  $first_img = $matches[1][0];
-
-  if(empty($first_img)) {
-    $first_img = "/wp-content/uploads/2016/05/blog_default_img.jpg";
-  }
-  return preg_replace("(^https?://)", "https://",$first_img);
-}
+//function my_catch_that_image() {
+//  global $post;
+//
+//  ob_start();
+//  ob_end_clean();
+//  preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+//  $first_img = $matches[1][0];
+//
+//  if(empty($first_img)) {
+//    $first_img = "/wp-content/uploads/2016/05/blog_default_img.jpg";
+//  }
+//  return preg_replace("(^https?://)", "https://",$first_img);
+//}
 
 function my_new_excerpt_more() {
   global $post;
@@ -48,6 +48,15 @@ function my_blog_page () {
   return false;
 }
 
+//determine if event page
+function my_find_a_class () {
+  if (is_page([39,5968,5970])) {
+	return true;
+  }
+
+  return false;
+}
+
 //return blog post only for search
 function my_search_blog_post_only( $query ) {
   if ( $query->is_search ) {
@@ -67,6 +76,8 @@ function my_body_class_names( $classes ) {
   // add 'class-name' to the $classes array
   if (my_blog_page()) {
     $classes[] = 'blog_pages';
+  } elseif (my_find_a_class()) {
+	$classes[] = 'find_a_class_pages';
   }
   // return the $classes array
   return $classes;

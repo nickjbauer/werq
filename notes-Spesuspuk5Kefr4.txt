@@ -4,12 +4,14 @@ NOTES
 
 - my_output_date - output nice string based on start and end date
 - my_blog_page - determine if its a blog type page
+- my_find_a_class - determine if a find a class type page
 - my_search_blog_post_only - modify search to only return blog post results
 - my_body_class_names - filter to append blog_pages to the body class if its a blog type page
-- my_catch_that_image - grab first image from post
+- my_catch_that_image - grab first image from post - NOT USED
 - add_filter('types_information_table', '__return_false'); disable toolset type front-end menu
 
 - youtube blog widget's title is in the css as a css content
+- find a class are programming partials while events are template
 
 ==========
 TODO

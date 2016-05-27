@@ -40,10 +40,10 @@
                 <?php endif; ?>
               <?php
               } else {
-                  global $wp_query;
-                  $wp_query->set_404();
-                  status_header( 404 );
-                  get_template_part( 'partials','404' );
+                global $wp_query;
+                $wp_query->set_404();
+                status_header( 404 );
+                get_template_part( 'partials','404' );
               }
             ?>
             <div id="back"><a href="/events">&laquo; Back To Events</a></div>

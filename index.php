@@ -8,34 +8,29 @@
   <?php endif; ?>
 
   <div class="row">
-  <?php
+<?php
     if (have_posts() || my_blog_page()) {
 
-      //feat. banner
-      if (is_front_page()) {get_template_part('partials','head'); }
+      if (my_blog_page()){
+        get_template_part('partials','blog');
 
-      if (my_blog_page()): ?>
-        <!-- blog pages -->
-        <?php get_template_part('partials','blog'); ?>
+      } else {
+        //feat. banner
+        get_template_part('partials','head');
+        the_post();
 
-      <?php else: ?>
-        <!-- everything else -->
-        <div class="twelve columns">
-          <?php the_post(); ?>
-          <article>
-            <?php the_content(); ?>
-          </article>
-
-          <?php if (is_front_page()) { get_template_part( 'partials', 'home_middle' ); } ?>
-        </div>
-
-      <?php
-      endif;
+        //see if general page or event page
+        if (my_find_a_class()) {
+          get_template_part('partials', 'find_a_class');
+        } else {
+          get_template_part('partials', 'page');
+        }
+      }
 
     } elseif (is_404()) {
         get_template_part('partials','404');
     }
-  ?>
+?>
 
   </div>
 </main>

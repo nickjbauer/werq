@@ -136,7 +136,7 @@ body {
   }
 
   .ngg-gallery-thumbnail-box {
-    padding:0px;
+    padding:0;
     margin:5px 19px;
   }
 
@@ -489,8 +489,11 @@ body {
 
       &:hover {
         color: $ternary-color;
-
       }
+    }
+
+    .blog_title a {
+      color:$primary-color;
     }
 
     .blog_header_image {
@@ -500,6 +503,7 @@ body {
     article {
       padding-top:0;
       word-wrap: break-word;
+      overflow:hidden;
 
       h1 {
         margin-bottom: 0.5em;
@@ -577,10 +581,11 @@ body {
         .blog_featured_video {
           &:before {
             content: "Featured Video";
-            margin-bottom: 0.25em;
+            margin-bottom: 0.5em;
             font-weight:bold;
             font-size: 1.25em;
             line-height: 1.25em;
+            display: block;
           }
 
 
@@ -590,6 +595,19 @@ body {
 
       .searchform label {
         display:none;
+      }
+    }
+
+    //blog pages :: single
+    .blog_single_content {
+      img {
+        width: auto;
+      }
+
+      h3 {
+        margin: 1em auto;
+        font-size: $font-size-md;
+        font-weight: normal;
       }
     }
 
@@ -613,6 +631,41 @@ body {
             content: " - "
           }
         }
+      }
+    }
+  }
+
+  //find a class
+  &.find_a_class_pages {
+
+    nav #menu-item-55 a {
+      color: $primary-color;
+      font-weight: bold;
+
+      &:hover {
+        color: $ternary-color;
+      }
+    }
+
+    .search_forms_container {
+      background-color: $secondary-color;
+      max-width: 870px;
+      width: 100%;
+      margin:1.25em auto;
+      text-align: center;
+
+      form {
+        @include inline-block();
+        text-align: center;
+        margin: 1em 2em;
+      }
+
+      input[type=submit] {
+        background-image: url("/wp-content/uploads/2016/05/ico_search.png");
+        width: 62px;
+        height: 58px;
+        margin:0 auto;
+        display:block;
       }
     }
   }

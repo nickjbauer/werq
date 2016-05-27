@@ -1051,7 +1051,7 @@ body {
     body .ngg-gallery-thumbnail img:hover {
       background-color: #bf39f7; }
   body .ngg-gallery-thumbnail-box {
-    padding: 0px;
+    padding: 0;
     margin: 5px 19px; }
   body header {
     background-color: #000000;
@@ -1283,11 +1283,14 @@ body {
     font-weight: bold; }
     body.blog_pages nav #menu-item-58 a:hover {
       color: #ffffff; }
+  body.blog_pages .blog_title a {
+    color: #000000; }
   body.blog_pages .blog_header_image {
     margin-top: 1em; }
   body.blog_pages article {
     padding-top: 0;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    overflow: hidden; }
     body.blog_pages article h1 {
       margin-bottom: 0.5em; }
     body.blog_pages article h2 {
@@ -1332,12 +1335,19 @@ body {
       margin: 0 2px; }
   body.blog_pages aside #wysiwyg_widgets_widget-8 .blog_featured_video:before {
     content: "Featured Video";
-    margin-bottom: 0.25em;
+    margin-bottom: 0.5em;
     font-weight: bold;
     font-size: 1.25em;
-    line-height: 1.25em; }
+    line-height: 1.25em;
+    display: block; }
   body.blog_pages aside .searchform label {
     display: none; }
+  body.blog_pages .blog_single_content img {
+    width: auto; }
+  body.blog_pages .blog_single_content h3 {
+    margin: 1em auto;
+    font-size: 1.25em;
+    font-weight: normal; }
   body.blog_pages.search h3 {
     line-height: 2em; }
   body.blog_pages.search h2 {
@@ -1348,6 +1358,30 @@ body {
       font-style: italic; }
       body.blog_pages.search ul .post-date:before {
         content: " - "; }
+  body.find_a_class_pages nav #menu-item-55 a {
+    color: #000000;
+    font-weight: bold; }
+    body.find_a_class_pages nav #menu-item-55 a:hover {
+      color: #ffffff; }
+  body.find_a_class_pages .search_forms_container {
+    background-color: #bf39f7;
+    max-width: 870px;
+    width: 100%;
+    margin: 1.25em auto;
+    text-align: center; }
+    body.find_a_class_pages .search_forms_container form {
+      display: -moz-inline-stack;
+      display: inline-block;
+      zoom: 1;
+      *display: inline;
+      text-align: center;
+      margin: 1em 2em; }
+    body.find_a_class_pages .search_forms_container input[type=submit] {
+      background-image: url("/wp-content/uploads/2016/05/ico_search.png");
+      width: 62px;
+      height: 58px;
+      margin: 0 auto;
+      display: block; }
 
 /*
 ===============
