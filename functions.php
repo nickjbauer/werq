@@ -72,6 +72,9 @@ function my_body_class_names( $classes ) {
   return $classes;
 }
 
+//turn off toolset types front-end menu
+add_filter('types_information_table', '__return_false');
+
 
 //nav menus
 $navmenus = array(

@@ -7,6 +7,9 @@ NOTES
 - my_search_blog_post_only - modify search to only return blog post results
 - my_body_class_names - filter to append blog_pages to the body class if its a blog type page
 - my_catch_that_image - grab first image from post
+- add_filter('types_information_table', '__return_false'); disable toolset type front-end menu
+
+- youtube blog widget's title is in the css as a css content
 
 ==========
 TODO
@@ -28,6 +31,8 @@ PLUGINS
 - toolset types
 - nextgen
 - post types order
+- featured post
+
 
 
 - backup buddy

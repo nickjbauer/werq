@@ -92,6 +92,7 @@ body {
     color: $ternary-color;
     border:none;
     background-image: url("/wp-content/uploads/2016/05/submit_btn_bg.png");
+    margin-left: -15px;
 
     &:hover {
       color: $secondary-color; 
@@ -440,7 +441,6 @@ body {
 
       ul {
         margin-top: 10px;
-        margin-bottom:0;
         list-style: none;
 
         li:last-child {
@@ -481,6 +481,16 @@ body {
   &.blog_pages {
     header {
       background-color: $ternary-color;
+    }
+
+    nav #menu-item-58 a {
+      color: $primary-color;
+      font-weight: bold;
+
+      &:hover {
+        color: $ternary-color;
+
+      }
     }
 
     .blog_header_image {
@@ -533,6 +543,54 @@ body {
       margin:auto;
       max-width: 250px;
       text-align:center;
+    }
+
+    aside {
+      h2 {
+        margin-bottom: 0.25em;
+      }
+
+      ul {
+        list-style:none;
+        margin-bottom: 1.5em;
+      }
+
+
+      #wysiwyg_widgets_widget-7 {
+        ul {
+          li {
+            @include inline-block();
+            margin:0;
+
+
+            img {
+              height: 35px;
+              width: 35px;
+              margin:0 2px;
+            }
+          }
+
+        }
+      }
+
+      #wysiwyg_widgets_widget-8 {
+        .blog_featured_video {
+          &:before {
+            content: "Featured Video";
+            margin-bottom: 0.25em;
+            font-weight:bold;
+            font-size: 1.25em;
+            line-height: 1.25em;
+          }
+
+
+        }
+
+      }
+
+      .searchform label {
+        display:none;
+      }
     }
 
     //blog pages :: search
