@@ -696,8 +696,20 @@ body {
     //find a class :: detail
     .find_a_class_detail {
 
+      p {
+        margin: 0.5em auto;
+      }
+
+      .avatar {
+        max-width: 165px;
+      }
+
       .not_found {
         text-align: center;
+      }
+
+      .dynamictext-990 {
+        display:none;
       }
 
       .google-maps {

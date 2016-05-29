@@ -9,7 +9,7 @@
 
     <div class="search_forms_container">
       <form action="/find-a-class/find-a-cass-list/" method="get">
-        <input type="text" placeholder="Search by city" name="city">
+        <input type="text" placeholder="Search by city" name="city" maxlength="50">
         <input type="submit" value="">
       </form>
 
@@ -72,7 +72,7 @@
       </form>
 
       <form action="/find-a-class/find-a-cass-list/" method="get">
-        <input type="text" placeholder="Search by zip code" name="zip">
+        <input type="text" placeholder="Search by zip code" name="zip" maxlength="5">
         <input type="submit" value="">
       </form>
     </div>
@@ -94,14 +94,42 @@
             $city = '## NO DB RUN ##';
           }
 
-
         } elseif (!empty($zip)) {
           $type = 'ZIP';
-          $zip = substr(filter_var($zip, FILTER_SANITIZE_NUMBER_INT),0,10);
-        } else {
-          $type = 'STATE';
-          $state = strtoupper(filter_var(substr(trim($state),0,2), FILTER_SANITIZE_STRING, [FILTER_FLAG_STRIP_HIGH,FILTER_FLAG_STRIP_LOW]));
-        }
+          $zip = (int) substr(filter_var($zip, FILTER_SANITIZE_NUMBER_INT),0,10);
+          $distance_sql = ', null as distance';
+
+            //get zip cordinates
+          $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
+          $sql = "
+              select
+              latitude
+              , longitude
+              from zip_code where zipcode = ?
+              limit 1
+            ";
+            $stmt = $con->prepare($sql);
+            $stmt->bind_param("d", $zip);
+            $stmt->execute();
+            $stmt->bind_result($lat, $lng);
+            $stmt->store_result();
+            $stmt->fetch();
+
+            if ($stmt->num_rows <= 0) {
+              $lat = 0;
+              $lng = 0;
+            }
+
+            $distance_sql = "
+            , ( 3959 * acos( cos( radians(?) ) * cos( radians( z.latitude ) )
+* cos( radians( z.longitude ) - radians(?) ) + sin( radians(?) ) * sin(radians(z.latitude)) ) ) AS distance
+            ";
+
+          } else {
+            $type = 'STATE';
+            $state = strtoupper(filter_var(substr(trim($state),0,2), FILTER_SANITIZE_STRING, [FILTER_FLAG_STRIP_HIGH,FILTER_FLAG_STRIP_LOW]));
+          }
+
   ?>
       <article>
       <div class="row find_a_class_list">
@@ -133,6 +161,7 @@
                       when 'SUN' then 7
                       else 8
                     end as day_order
+                  ".$distance_sql."
               from ".MY_MEMBER_DB_TABLE." u
               inner join ".MY_MEMBER_CLASS_DB_TABLE." c on u.id = c.user_id
               inner join ".MY_ZIP_DB_TABLE." z on c.gym_zip = z.zipcode
@@ -143,19 +172,20 @@
             //append based on filter
             switch($type) {
               case 'STATE':
-                $sql .= ' and c.gym_state = ?';
+                $sql .= ' and c.gym_state = ? ORDER BY day_order, c.time, c.gym_name';
                 break;
 
               case 'CITY':
-                $sql .= " and c.gym_city like ?";
+                $sql .= " and c.gym_city like ? ORDER BY day_order, c.time, c.gym_name";
                 break;
 
               default:
-
+                $sql .= "
+                  and (z.Latitude BETWEEN ?-2 and ?+2) and (z.Longitude BETWEEN ?-2 and ?+2)
+                  having distance < 75
+                  order by distance, day_order, c.time, c.gym_name
+                ";
             }
-
-            //order by clause
-            $sql .= " ORDER BY day_order, c.time, c.gym_name";
 
             $stmt = $con->prepare($sql);
 
@@ -171,11 +201,11 @@
                 break;
 
               default:
-
+                $stmt->bind_param("ddddddd", $lat,$lng,$lat,$lat,$lat,$lng,$lng);
             }
 
             $stmt->execute();
-            $stmt->bind_result($id, $fname, $lname, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time, $day_order);
+            $stmt->bind_result($id, $fname, $lname, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time, $day_order, $distance);
             $stmt->store_result();
 
             if ($stmt->num_rows > 0) {
@@ -194,7 +224,7 @@
                   <td><?= (!empty($day)) ? $day : ''; ?></td>
                   <td><?= (!empty($time)) ? $time : ''; ?></td>
                   <td><?= (!empty($gym)) ? $gym : ''; ?></td>
-                  <td><?= (!empty($state)) ? $gym_state : ''; ?></td>
+                  <td><?= (!empty($gym_state)) ? $gym_state : ''; ?></td>
                   <td><?= (!empty($gym_address))? $gym_address.'<br>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></td>
                   <td><?= (!empty($id)) ? '<a href="/find-a-class-detail/?id=' . encrypt_decrypt_api('encrypt',$id) . '"><div class="register">More Info</div></a>' : ''; ?></td>
                 </tr>

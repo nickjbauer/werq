@@ -29,6 +29,22 @@ NOTES
     -MY_IV
     -MY_HASH
 
+- xmlrpc turned off
+    Turning Off XMLRPC
+    http://www.blogaid.net/disable-xml-rpc-in-wordpress-to-prevent-ddos-attack/
+
+    In Function.php
+
+    //turn off xmlrpc
+    add_filter( 'xmlrpc_methods', function( $methods ) {
+      unset( $methods['pingback.ping'] );
+       return $methods;
+    } );
+
+    In wp.config
+    //put last line
+    add_filter('xmlrpc_enabled', '__return_false');
+
 ==========
 TODO
 ==========

@@ -15,6 +15,12 @@
 //  return preg_replace("(^https?://)", "https://",$first_img);
 //}
 
+//turn off xmlrpc
+add_filter( 'xmlrpc_methods', function( $methods ) {
+  unset( $methods['pingback.ping'] );
+   return $methods;
+} );
+
 //shortcode to retieve instructor's email for cf7
 function my_cf7_get_instructor_email(){
 
