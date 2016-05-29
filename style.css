@@ -1312,7 +1312,7 @@ body {
     max-height: 250px;
     overflow: hidden;
     line-height: 250px;
-    border: thin solid #D1D1D1;
+    border: thin solid #d1d1d1;
     margin-bottom: 10px; }
     body.blog_pages .crop img {
       vertical-align: middle; }
@@ -1365,6 +1365,8 @@ body {
       font-style: italic; }
       body.blog_pages.search ul .post-date:before {
         content: " - "; }
+  body.find_a_class_pages article {
+    margin-top: 1.25em; }
   body.find_a_class_pages nav #menu-item-55 a {
     color: #000000;
     font-weight: bold; }
@@ -1389,6 +1391,23 @@ body {
       height: 58px;
       margin: 0 auto;
       display: block; }
+  body.find_a_class_pages .find_a_class_list h2 {
+    margin-bottom: 1em;
+    text-align: center; }
+  body.find_a_class_pages .find_a_class_detail .not_found {
+    text-align: center; }
+  body.find_a_class_pages .find_a_class_detail .google-maps {
+    position: relative;
+    padding-bottom: 75%;
+    height: 0;
+    overflow: hidden; }
+    body.find_a_class_pages .find_a_class_detail .google-maps iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+      border: 0; }
 
 /*
 ===============

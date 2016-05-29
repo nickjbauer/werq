@@ -539,7 +539,7 @@ body {
       max-height: 250px;
       overflow:hidden;
       line-height: 250px;
-      border: thin solid #D1D1D1;
+      border: thin solid $border-color;
       margin-bottom: 10px;
 
       img {
@@ -650,7 +650,9 @@ body {
 
   //find a class
   &.find_a_class_pages {
-
+    article {
+      margin-top: 1.25em;
+    }
     nav #menu-item-55 a {
       color: $primary-color;
       font-weight: bold;
@@ -660,6 +662,7 @@ body {
       }
     }
 
+    //find a class :: search
     .search_forms_container {
       background-color: $secondary-color;
       max-width: 870px;
@@ -680,6 +683,39 @@ body {
         margin:0 auto;
         display:block;
       }
+    }
+
+    //find a class :: list
+    .find_a_class_list {
+      h2 {
+        margin-bottom: 1em;
+        text-align: center;
+      }
+    }
+
+    //find a class :: detail
+    .find_a_class_detail {
+
+      .not_found {
+        text-align: center;
+      }
+
+      .google-maps {
+        position: relative;
+        padding-bottom: 75%; // This is the aspect ratio
+        height: 0;
+        overflow: hidden;
+
+        iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100% !important;
+          height: 100% !important;
+          border:0;
+        }
+      }
+
     }
   }
 

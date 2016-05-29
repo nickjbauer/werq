@@ -88,6 +88,13 @@
         if (!empty($city)) {
           $type = 'CITY';
           $city = substr(trim(filter_var($city, FILTER_SANITIZE_STRING, [FILTER_FLAG_STRIP_HIGH,FILTER_FLAG_STRIP_LOW])),0,25);
+
+          //minimum of 3 chars
+          if (strlen($city)<3) {
+            $city = '## NO DB RUN ##';
+          }
+
+
         } elseif (!empty($zip)) {
           $type = 'ZIP';
           $zip = substr(filter_var($zip, FILTER_SANITIZE_NUMBER_INT),0,10);
@@ -96,118 +103,185 @@
           $state = strtoupper(filter_var(substr(trim($state),0,2), FILTER_SANITIZE_STRING, [FILTER_FLAG_STRIP_HIGH,FILTER_FLAG_STRIP_LOW]));
         }
   ?>
-  <div class="row">
-    <div class="twelve columns">
-      <table class="event_table find_a_class">
-        <tr>
-          <th>Day</th>
-          <th>Time</th>
-          <th>Gym Name</th>
-          <th>State</th>
-          <th>Address</th>
-          <th>Register</th>
-        </tr>
-        <?php
-        //execute sql based on command
-        $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
+      <article>
+      <div class="row find_a_class_list">
+        <div class="twelve columns">
+          <h2>Search Results</h2>
+          <?php
+            //execute sql based on command
+            $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
 
-        $sql = "
-          select distinct
-              u.id
-              , u.fname
-              , u.lname
-              , c.gym_name
-              , c.gym_address
-              , c.gym_city
-              , c.gym_state
-              , c.gym_zip
-              , c.day
-              , c.time
-              , case c.day
-                  when 'MON' then 1
-                  when 'TUR' then 2
-                  when 'WED' then 3
-                  when 'THU' then 4
-                  when 'FRI' then 5
-                  when 'SAT' then 6
-                  when 'SUN' then 7
-                  else 8
-                end as day_order
-          from ".MY_MEMBER_DB_TABLE." u
-          inner join ".MY_MEMBER_CLASS_DB_TABLE." c on u.id = c.user_id
-          inner join ".MY_ZIP_DB_TABLE." z on c.gym_zip = z.zipcode
-          where u.status = 1
-        ";
-        //	--and (z.Latitude BETWEEN ?-2 and ?+2) and (z.Longitude BETWEEN ?-2 and ?+2)
+            $sql = "
+              select distinct
+                  c.id
+                  , u.fname
+                  , u.lname
+                  , c.gym_name
+                  , c.gym_address
+                  , c.gym_city
+                  , c.gym_state
+                  , c.gym_zip
+                  , c.day
+                  , c.time
+                  , case c.day
+                      when 'MON' then 1
+                      when 'TUR' then 2
+                      when 'WED' then 3
+                      when 'THU' then 4
+                      when 'FRI' then 5
+                      when 'SAT' then 6
+                      when 'SUN' then 7
+                      else 8
+                    end as day_order
+              from ".MY_MEMBER_DB_TABLE." u
+              inner join ".MY_MEMBER_CLASS_DB_TABLE." c on u.id = c.user_id
+              inner join ".MY_ZIP_DB_TABLE." z on c.gym_zip = z.zipcode
+              where u.status = 1
+            ";
+            //	--and (z.Latitude BETWEEN ?-2 and ?+2) and (z.Longitude BETWEEN ?-2 and ?+2)
 
-        //append based on filter
-        switch($type) {
-          case 'STATE':
-            $sql .= ' and c.gym_state = ?';
-            break;
+            //append based on filter
+            switch($type) {
+              case 'STATE':
+                $sql .= ' and c.gym_state = ?';
+                break;
 
-          case 'CITY':
-            $sql .= " and c.gym_city like ?";
-            break;
+              case 'CITY':
+                $sql .= " and c.gym_city like ?";
+                break;
 
-          default:
+              default:
 
-        }
+            }
 
-        //order by clause
-        $sql .= " ORDER BY day_order, c.time, c.gym_name";
+            //order by clause
+            $sql .= " ORDER BY day_order, c.time, c.gym_name";
 
-        $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);
 
-        //append based on filter
-        switch($type) {
-          case 'STATE':
-            $stmt->bind_param("s", $state);
-            break;
+            //append based on filter
+            switch($type) {
+              case 'STATE':
+                $stmt->bind_param("s", $state);
+                break;
 
-          case 'CITY':
-            $city = '%'.$city.'%';
-            $stmt->bind_param("s", $city);
-            break;
+              case 'CITY':
+                $city = '%'.$city.'%';
+                $stmt->bind_param("s", $city);
+                break;
 
-          default:
+              default:
 
-        }
+            }
 
-        $stmt->execute();
-        $stmt->bind_result($id, $fname, $lname, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time, $day_order);
-        $stmt->store_result();
-        if ($results > 0) {
-          while ($stmt->fetch()) { ?>
-            <tr>
-              <td><?= (!empty($day)) ? $day : ''; ?></td>
-              <td><?= (!empty($time)) ? $time : ''; ?></td>
-              <td><?= (!empty($gym)) ? $gym : ''; ?></td>
-              <td><?= (!empty($state)) ? $gym_state : ''; ?></td>
-              <td><?= (!empty($gym_address))? $gym_address.'<br>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></td>
-              <td><?= (!empty($id)) ? '<a href="/find-a-class-detail/?id=' . $id . '"><div class="register">More Info</div></a>' : ''; ?></td>
-            </tr>
-      <?php
-          }
-        } else { echo '<tr><td colspan="6" style="text-align: center"><h2>Sorry No Results Found</h2></td>'; }
-      ?>
-      </table>
-    </div>
-  </div>
+            $stmt->execute();
+            $stmt->bind_result($id, $fname, $lname, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time, $day_order);
+            $stmt->store_result();
 
+            if ($stmt->num_rows > 0) {
+          ?>
+              <table class="event_table find_a_class">
+                <tr>
+                  <th>Day</th>
+                  <th>Time</th>
+                  <th>Gym Name</th>
+                  <th>State</th>
+                  <th>Address</th>
+                  <th>Register</th>
+                </tr>
+          <?php while ($stmt->fetch()): ?>
+                <tr>
+                  <td><?= (!empty($day)) ? $day : ''; ?></td>
+                  <td><?= (!empty($time)) ? $time : ''; ?></td>
+                  <td><?= (!empty($gym)) ? $gym : ''; ?></td>
+                  <td><?= (!empty($state)) ? $gym_state : ''; ?></td>
+                  <td><?= (!empty($gym_address))? $gym_address.'<br>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></td>
+                  <td><?= (!empty($id)) ? '<a href="/find-a-class-detail/?id=' . $id . '"><div class="register">More Info</div></a>' : ''; ?></td>
+                </tr>
+          <?php endwhile; ?>
+                </table>
+
+          <?php
+            } else { echo '<h2>Sorry No Results Found</h2>'; }
+          ?>
+        </div>
+      </div>
+      </article>
 
   <?php
       break;
       case 5970: //detail
         $id = $_GET['id'];
+        $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
+        $sql = "
+          select
+            u.fname
+            , u.lname
+            , u.email
+            , u.avatar
+            , u.website
+            , c.gym_name
+            , c.gym_address
+            , c.gym_city
+            , c.gym_state
+            , c.gym_zip
+            , c.day
+            , c.time
+          from ".MY_MEMBER_CLASS_DB_TABLE." c
+          inner join ".MY_MEMBER_DB_TABLE." u on c.user_id = u.id
+          where c.id = ?
+          limit 1
+        ";
 
-        echo $id;
+      $stmt = $con->prepare($sql);
+      $stmt->bind_param("i", $id);
+      $stmt->execute();
+      $stmt->bind_result($fname, $lname, $email, $avatar, $website, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time);
+      $stmt->store_result();
+    ?>
+      <article>
+      <div class="row find_a_class_detail">
+    <?php
+      if ($stmt->num_rows > 0) {
+        $stmt->fetch();
+    ?>
+          <div class="six columns">
+            <div class="google-maps">
+              <iframe src="https://maps.google.com/maps?f=q&hl=en&geocode=&q= <?=$gym_address?> <?=$gym_city?>, <?=$gym_state?> <?=$gym_zip?>&ie=UTF8&z=14&output=embed" width="600" height="450" frameborder="0"></iframe>
+            </div>
+            <div class="gym_details">
+              <p><strong><?= (!empty($gym)) ? $gym : ''; ?></strong></p>
+              <p><?= (!empty($gym_address))? $gym_address.'<br>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></p>
+              <?php if (!empty($website)): ?>
+                <p><a href="<?=$website?>" target="_blank"><?=$website?></a></p>
+              <?php endif; ?>
+              <p><?=$day?> | <?=$time?></p>
+            </div>
+          </div>
+
+          <div class="five columns offset-by-one">
+            <div class="avatar"><img src="<?= (!empty($avatar))? '//members.werqfitness.com/uploads/'.$avatar:'/wp-content/uploads/2016/04/Original_RGB_800px-1-300x188.jpg' ?>"></div>
+            <div class="instructor_detail">
+              <strong>Instructor:</strong> <?=$fname?> <?=$lname?>
+            </div>
+            <div class="instructor_contact">
+              
+            </div>
+          </div>
+    <?php
+      } else {
+    ?>
+
+        <div class="tweleve columns not_found">
+          <h2>Sorry No Profile Found</h2>
+          <p><a href="/find-a-class/">Try another search</a></p>
+        </div>
+
+  <?php
+      }
   ?>
-
-  this is 6970
-
-
-
+      </div>
+      </article>
   <?php
     break;
   endswitch;
