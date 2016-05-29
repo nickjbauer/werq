@@ -55,6 +55,11 @@ body {
     line-height: 1em;
   }
 
+  h4 {
+    font-size: 1em;
+    line-height: 1em;
+  }
+
   h1 + table, h2 + table, h3 + table {
     margin-top: -15px;
   }
@@ -601,14 +606,22 @@ body {
     //blog pages :: single
     .blog_single_content {
       img {
-        width: auto;
+        width: inherit;
+        height: auto;
+        max-width: 300px;
       }
+
+      .blog_single_feat_image img {
+        max-width: 600px;
+      }
+
 
       h3 {
         margin: 1em auto;
         font-size: $font-size-md;
         font-weight: normal;
       }
+
     }
 
     //blog pages :: search
