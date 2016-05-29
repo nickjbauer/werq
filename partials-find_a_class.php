@@ -196,7 +196,7 @@
                   <td><?= (!empty($gym)) ? $gym : ''; ?></td>
                   <td><?= (!empty($state)) ? $gym_state : ''; ?></td>
                   <td><?= (!empty($gym_address))? $gym_address.'<br>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></td>
-                  <td><?= (!empty($id)) ? '<a href="/find-a-class-detail/?id=' . $id . '"><div class="register">More Info</div></a>' : ''; ?></td>
+                  <td><?= (!empty($id)) ? '<a href="/find-a-class-detail/?id=' . encrypt_decrypt_api('encrypt',$id) . '"><div class="register">More Info</div></a>' : ''; ?></td>
                 </tr>
           <?php endwhile; ?>
                 </table>
@@ -211,7 +211,7 @@
   <?php
       break;
       case 5970: //detail
-        $id = $_GET['id'];
+        $id = (int) encrypt_decrypt_api('decrypt',$_GET['id']);
         $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
         $sql = "
           select
@@ -236,7 +236,7 @@
       $stmt = $con->prepare($sql);
       $stmt->bind_param("i", $id);
       $stmt->execute();
-      $stmt->bind_result($fname, $lname, $email, $avatar, $website, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time);
+      $stmt->bind_result($fname, $lname, $instructor_email, $avatar, $website, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time);
       $stmt->store_result();
     ?>
       <article>
@@ -265,7 +265,9 @@
               <strong>Instructor:</strong> <?=$fname?> <?=$lname?>
             </div>
             <div class="instructor_contact">
-              
+
+              <?php echo do_shortcode('[contact-form-7 id="5981" title="Instructor Form"]')?>
+
             </div>
           </div>
     <?php

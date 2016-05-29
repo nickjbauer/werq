@@ -15,6 +15,78 @@
 //  return preg_replace("(^https?://)", "https://",$first_img);
 //}
 
+//shortcode to retieve instructor's email for cf7
+function my_cf7_get_instructor_email(){
+
+  $id = (int) encrypt_decrypt_api('decrypt',$_GET['id']);
+  $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
+  $sql = "
+          select
+            u.fname
+            , u.lname
+            , u.email
+            , u.avatar
+            , u.website
+            , c.gym_name
+            , c.gym_address
+            , c.gym_city
+            , c.gym_state
+            , c.gym_zip
+            , c.day
+            , c.time
+          from ".MY_MEMBER_CLASS_DB_TABLE." c
+          inner join ".MY_MEMBER_DB_TABLE." u on c.user_id = u.id
+          where c.id = ?
+          limit 1
+        ";
+
+  $stmt = $con->prepare($sql);
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
+  $stmt->bind_result($fname, $lname, $instructor_email, $avatar, $website, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time);
+  $stmt->store_result();
+
+  if ($stmt->num_rows > 0) {
+	$stmt->fetch();
+	if (!empty($instructor_email)) {
+	  $instructor_email .= ', sphamorn@gmail.com';
+	} else {
+	  $instructor_email = 'sphamorn@gmail.com';
+	}
+  }
+
+	return $instructor_email;
+}
+add_shortcode('my_cf7_instructor_email', 'my_cf7_get_instructor_email');
+
+
+//encrypt/decrypt function
+function encrypt_decrypt_api($action, $string) {
+  $output = false;
+
+  $encrypt_method = MY_ENCRPYTION_METHOD;
+  $secret_key = MY_KEY;
+  $secret_iv = MY_IV;
+
+  // hash
+  $key = hash('sha256', $secret_key);
+
+  // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+  $iv = substr(hash(MY_HASH, $secret_iv), 0, 16);
+
+  if( $action == 'encrypt' ) {
+	$output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+	$output = base64_encode($output);
+  }
+  else if( $action == 'decrypt' ){
+	$output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+  }
+
+  return $output;
+}
+
+
+
 function my_new_excerpt_more() {
   global $post;
   return '<a class="blog_read_more" href="'. get_permalink($post->ID) . '"> Continue Reading &raquo;</a>';

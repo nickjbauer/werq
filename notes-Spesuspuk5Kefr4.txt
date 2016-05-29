@@ -21,6 +21,14 @@ NOTES
     -MY_DB_MEMBER_TABLE
     -MY_ZIP_DB_TABLE
 
+- my_cf7_get_instructor_email - shortcode to retrieve instructor email for dynamic cf7 recipent
+
+- encrypt_decrypt_api - encrypt/decrypt function
+    -MY_ENCRYPTION_METHOD
+    -MY_KEY
+    -MY_IV
+    -MY_HASH
+
 ==========
 TODO
 ==========
