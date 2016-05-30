@@ -56,20 +56,23 @@ TODO
 - link on meet, teach, home
 - meet real data
 - teach faq, real data
+- automatic plugin update
 
 ==========
 PLUGINS
 ==========
-- media replace
+- enable media replace
 - tinymce advanced
 - WYSIWYG Widgets / Widget Blocks
 - contact form 7
+- contact form 7 - dynamic text extension
 - toolset types
 - nextgen
 - post types order
 - featured post
-
-
-
+- ag custom admin
 - backup buddy
-- automatic plugin update
+- youtube widget response
+- login lockdown
+- captcha on login
+- broken link checker
