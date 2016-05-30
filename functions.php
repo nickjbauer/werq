@@ -27,19 +27,7 @@ function my_cf7_get_instructor_email(){
   $id = (int) encrypt_decrypt_api('decrypt',$_GET['id']);
   $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
   $sql = "
-          select
-            u.fname
-            , u.lname
-            , u.email
-            , u.avatar
-            , u.website
-            , c.gym_name
-            , c.gym_address
-            , c.gym_city
-            , c.gym_state
-            , c.gym_zip
-            , c.day
-            , c.time
+          select u.email
           from ".MY_MEMBER_CLASS_DB_TABLE." c
           inner join ".MY_MEMBER_DB_TABLE." u on c.user_id = u.id
           where c.id = ?
@@ -49,7 +37,7 @@ function my_cf7_get_instructor_email(){
   $stmt = $con->prepare($sql);
   $stmt->bind_param("i", $id);
   $stmt->execute();
-  $stmt->bind_result($fname, $lname, $instructor_email, $avatar, $website, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time);
+  $stmt->bind_result($instructor_email);
   $stmt->store_result();
 
   if ($stmt->num_rows > 0) {
@@ -70,14 +58,12 @@ add_shortcode('my_cf7_instructor_email', 'my_cf7_get_instructor_email');
 function encrypt_decrypt_api($action, $string) {
   $output = false;
 
-  $encrypt_method = MY_ENCRPYTION_METHOD;
+  $encrypt_method = MY_ENCRYPTION_METHOD;
   $secret_key = MY_KEY;
   $secret_iv = MY_IV;
 
   // hash
   $key = hash('sha256', $secret_key);
-
-  // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
   $iv = substr(hash(MY_HASH, $secret_iv), 0, 16);
 
   if( $action == 'encrypt' ) {

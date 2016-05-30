@@ -85,7 +85,7 @@
         $state = (isset($_GET['state'])) ? $_GET['state'] : null ;
         $zip = (isset($_GET['zip']))? $_GET['zip'] : null;
         $distance_sql = ', null as distance';
-        
+
         if (!empty($city)) {
           $type = 'CITY';
           $city = substr(trim(filter_var($city, FILTER_SANITIZE_STRING, [FILTER_FLAG_STRIP_HIGH,FILTER_FLAG_STRIP_LOW])),0,25);
@@ -98,6 +98,7 @@
         } elseif (!empty($zip)) {
           $type = 'ZIP';
           $zip = (int) substr(filter_var($zip, FILTER_SANITIZE_NUMBER_INT),0,10);
+
 
             //get zip cordinates
           $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
