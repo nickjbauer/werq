@@ -45,6 +45,8 @@ NOTES
     //put last line
     add_filter('xmlrpc_enabled', '__return_false');
 
+- newsletter form in 2 places widget in WP and partials-home_middle.php
+
 ==========
 TODO
 ==========

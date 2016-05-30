@@ -43,9 +43,9 @@ function my_cf7_get_instructor_email(){
   if ($stmt->num_rows > 0) {
 	$stmt->fetch();
 	if (!empty($instructor_email)) {
-	  $instructor_email .= ', sphamorn@gmail.com';
+	  $instructor_email .= ', haley@werqfitness.com';
 	} else {
-	  $instructor_email = 'sphamorn@gmail.com';
+	  $instructor_email = 'haley@werqfitness.com';
 	}
   }
 

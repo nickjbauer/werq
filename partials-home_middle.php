@@ -4,7 +4,7 @@
       sign up for free
       <h3>WERQ<span>outs</span></h3>
 
-      <form method="post"
+      <form method="post" target="_blank"
             action="//chicagofitnessparties.us2.list-manage.com/subscribe/post?u=9d46ac14124721f21e6c2bc55&id=8f2588374e">
         <input type="email" placeholder="Email Address" name="EMAIL">
         <input type="submit" value="SUBMIT">
