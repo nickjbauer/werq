@@ -289,7 +289,7 @@
               <p><?=$day?> | <?=$time?></p>
             </div>
             <div class="back_link">
-              <a href="javascript:history.back();">&#8592; Back</a>
+              <a href="javascript:history.back();">« Back</a>
             </div>
           </div>
 

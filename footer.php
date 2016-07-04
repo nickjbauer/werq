@@ -2,7 +2,7 @@
 
 <footer>
     <?php dynamic_sidebar('Footer'); ?>
-    <p class="copyright">Copyright &copy; <?php echo date("Y"); ?> WERQ Fitness, LLC, All rights reserved. <a href="#">Terms & Conditions.</a><p><a href="http://www.wecre8design.com" target="_blank">Design by We Cre8 Design</a> | <a href="http://www.webvolutionchicago.com" target="_blank">Development by Webvolution</a></p>
+    <p class="copyright">Copyright &copy; <?php echo date("Y"); ?> WERQ Fitness, LLC, All rights reserved. <a href="#">Terms & Conditions.</a><p><a rel="nofollow" href="http://www.wecre8design.com" target="_blank">Design by We Cre8 Design</a> | <a rel="nofollow" href="http://www.webvolutionchicago.com" target="_blank">Development by Webvolution</a></p>
 </footer>
 
 <script type="text/javascript"><?php

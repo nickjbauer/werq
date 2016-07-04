@@ -17,7 +17,6 @@ Media Queries
       aside {
         //call 2-col
         max-width: 620px;
-        @include debug4();
         text-align: center;
 
         //seen 1-col
