@@ -49,7 +49,7 @@ get_header();
         ?>
         <div class="row">
           <div class="<?=($type=='TEACH')? 'twelve':'nine'?> columns">
-            <table class="event_table teach">
+            <table class="event_table <?=(strtolower($type))?>">
               <tr>
                 <?= $thead ?>
               </tr>
@@ -84,23 +84,23 @@ get_header();
                     case 'TEACH':
                       $address = get_post_meta($id, 'wpcf-' . $slug . '-address', true);
                   ?>
-                      <td><?= (!empty($date_output_str)) ? $date_output_str : ''; ?></td>
-                      <td><?= (!empty($gym)) ? $gym : ''; ?></td>
-                      <td><?= (!empty($state)) ? $state : ''; ?></td>
-                      <td><?= (!empty($address)) ? $address : ''; ?></td>
-                      <td><?= (!empty($url)) ? '<a href="' . $url . '" target="_blank"><div class="register">Register Now</div></a>' : ''; ?></td>
+                      <td data-label="<?= (!empty($date_output_str)) ? 'Date & Time:&nbsp;' : ''; ?>"><?= (!empty($date_output_str)) ? $date_output_str : ''; ?></td>
+                      <td data-label="<?= (!empty($gym)) ? 'Gym:&nbsp;' : ''; ?>"><?= (!empty($gym)) ? $gym : ''; ?></td>
+                      <td data-label="<?= (!empty($state)) ? 'State:&nbsp;' : ''; ?>"><?= (!empty($state)) ? $state : ''; ?></td>
+                      <td data-label="<?= (!empty($address)) ? 'Address:&nbsp;' : ''; ?>"><?= (!empty($address)) ? $address : ''; ?></td>
+                      <td data-label=""><?= (!empty($url)) ? '<a href="' . $url . '" target="_blank"><div class="register">Register Now</div></a>' : ''; ?></td>
                   <?
                     break;
                     case 'EVENT':
                       $title = get_the_title();
                       $city = get_post_meta($id, 'wpcf-' . $slug . '-city', true);
                   ?>
-                      <td><?= (!empty($title)) ? $title : ''; ?></td>
-                      <td><?= (!empty($date_output_str)) ? $date_output_str : ''; ?></td>
-                      <td><?= (!empty($gym)) ? $gym : ''; ?></td>
-                      <td><?= (!empty($city)) ? $city : ''; ?></td>
-                      <td><?= (!empty($state)) ? $state : ''; ?></td>
-                      <td><?= (!empty($url)) ? '<a href="' . $url . '" target="_blank"><div class="register">Register Now</div></a>' : ''; ?></td>
+                      <td data-label="<?= (!empty($title)) ? 'Class:&nbsp;' : ''; ?>"><?= (!empty($title)) ? $title : ''; ?></td>
+                      <td data-label="<?= (!empty($date_output_str)) ? 'Date & Time:&nbsp;' : ''; ?>"><?= (!empty($date_output_str)) ? $date_output_str : ''; ?></td>
+                      <td data-label="<?= (!empty($gym)) ? 'Gym:&nbsp;' : ''; ?>"><?= (!empty($gym)) ? $gym : ''; ?></td>
+                      <td data-label="<?= (!empty($city)) ? 'City:&nbsp;' : ''; ?>"><?= (!empty($city)) ? $city : ''; ?></td>
+                      <td data-label="<?= (!empty($state)) ? 'State:&nbsp;' : ''; ?>"><?= (!empty($state)) ? $state : ''; ?></td>
+                      <td data-label=""><?= (!empty($url)) ? '<a href="' . $url . '" target="_blank"><div class="register">Register Now</div></a>' : ''; ?></td>
                   <?
                     break;
                   }

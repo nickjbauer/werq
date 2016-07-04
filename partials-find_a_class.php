@@ -222,12 +222,12 @@
                 </tr>
           <?php while ($stmt->fetch()): ?>
                 <tr>
-                  <td><?= (!empty($day)) ? $day : ''; ?></td>
-                  <td><?= (!empty($time)) ? $time : ''; ?></td>
-                  <td><?= (!empty($gym)) ? $gym : ''; ?></td>
-                  <td><?= (!empty($gym_state)) ? $gym_state : ''; ?></td>
-                  <td><?= (!empty($gym_address))? $gym_address.'<br>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></td>
-                  <td><?= (!empty($id)) ? '<a href="/find-a-class-detail/?id=' . encrypt_decrypt_api('encrypt',$id) . '"><div class="register">More Info</div></a>' : ''; ?></td>
+                  <td data-label="<?= (!empty($day)) ? 'Day:&nbsp;' : ''; ?>"><?= (!empty($day)) ? $day : ''; ?></td>
+                  <td data-label="<?= (!empty($time)) ? 'Time:&nbsp;' : ''; ?>"><?= (!empty($time)) ? $time : ''; ?></td>
+                  <td data-label="<?= (!empty($gym)) ? 'Gym:&nbsp;' : ''; ?>"><?= (!empty($gym)) ? $gym : ''; ?></td>
+                  <td data-label="<?= (!empty($gym_state)) ? 'State:&nbsp;' : ''; ?>"><?= (!empty($gym_state)) ? $gym_state : ''; ?></td>
+                  <td data-label="<?= (!empty($gym_address) || !empty($gym_city) || !empty($gym_state) || !empty($gym_zip) ) ? 'Address:&nbsp;' : ''; ?>"><?= (!empty($gym_address))? $gym_address.'<span class="no_mobile_break">,&nbsp;</span>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></td>
+                  <td data-label=""><?= (!empty($id)) ? '<a href="/find-a-class-detail/?id=' . encrypt_decrypt_api('encrypt',$id) . '"><div class="register">More Info</div></a>' : ''; ?></td>
                 </tr>
           <?php endwhile; ?>
                 </table>
@@ -288,6 +288,9 @@
               <?php endif; ?>
               <p><?=$day?> | <?=$time?></p>
             </div>
+            <div class="back_link">
+              <a href="javascript:history.back();">&#8592; Back</a>
+            </div>
           </div>
 
           <div class="five columns offset-by-one">
@@ -296,9 +299,8 @@
               <strong>Instructor:</strong> <?=$fname?> <?=$lname?>
             </div>
             <div class="instructor_contact">
-
-              <?php echo do_shortcode('[contact-form-7 id="5981" title="Instructor Form"]')?>
-
+              <a href="mailto:<?=my_email_scrambler($instructor_email)?>?subject=WERQ Fitness : Contact Instructor">Contact Instructor</a>
+              <?php //echo do_shortcode('[contact-form-7 id="5981" title="Instructor Form"]')?>
             </div>
           </div>
     <?php
@@ -321,3 +323,12 @@
   ?>
 
 </div>
+
+<script>
+  <?
+    $sep = '!WCa!';
+    $dot = '!WCb!';
+    $suf = '!WCc!';
+  ?>
+  function hrefReplacer(e,r){for(i=0;i<=document.links.length-1;i++)-1!=document.links[i].href.indexOf(e)&&(document.links[i].href=document.links[i].href.split(e)[0]+r+document.links[i].href.split(e)[1])}function unscramble(e,r){if(0==e){var n="_atPR_";hrefReplacer(n,"@")}else{var n="<?=$sep?>",c="<?=$dot?>",i="<?=$suf?>";""==r&&(r="com"),hrefReplacer(n,"@"),hrefReplacer(c,"."),hrefReplacer(i,r)}}unscramble(0),unscramble(1,"com");
+</script>

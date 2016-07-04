@@ -9,6 +9,7 @@ NOTES
 - my_body_class_names - filter to append blog_pages to the body class if its a blog type page
 - my_catch_that_image - grab first image from post - NOT USED
 - add_filter('types_information_table', '__return_false'); disable toolset type front-end menu
+- my_email_scrambler - email scrmabler for contact instructor
 
 - youtube blog widget's title is in the css as a css content
 - find a class are programming partials while events are template
@@ -47,12 +48,12 @@ NOTES
 
 - newsletter form in 2 places widget in WP and partials-home_middle.php
 
+- data-label for TABLE responsiveness with use in conjunction with no_mobile_break span hack
+
 ==========
 TODO
 ==========
 - security plugins to hide
-- change email in settings, contact form
-- final css compression
 - link on meet, teach, home
 - meet real data
 - teach faq, real data
@@ -66,6 +67,7 @@ PLUGINS
 - WYSIWYG Widgets / Widget Blocks
 - contact form 7
 - contact form 7 - dynamic text extension
+- contact form 7 honeypot
 - toolset types
 - nextgen
 - post types order

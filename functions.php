@@ -90,14 +90,14 @@ function my_output_date ($unix_start, $unix_end) {
   //determine date logic
   if ($unix_start == $unix_end) {
 	//same day and time
-	return date('D, F jS Y',$unix_start).'<br>'. date('g:i A',$unix_start);
+	return date('D, F jS Y',$unix_start).'<span class="no_mobile_break">&nbsp;</span>'. date('g:i A',$unix_start);
   } else {
 	if (date('m/d/Y',$unix_start) == date('m/d/Y',$unix_end)) {
 	  //same day
-	  return date('D, F jS Y',$unix_start).'<br>'. date('g:i A',$unix_start). ' to ' .date('g:i A',$unix_end);
+	  return date('D, F jS Y',$unix_start).'<span class="no_mobile_break">&nbsp;</span>'. date('g:i A',$unix_start). ' to ' .date('g:i A',$unix_end);
 	} else {
 	  //diff day
-	  return date('D, F jS Y g:i A',$unix_start). ' thru <br>'. date('D, F jS Y g:i A',$unix_end);
+	  return date('D, F jS Y g:i A',$unix_start). ' thru <span class="no_mobile_break"></span>'. date('D, F jS Y g:i A',$unix_end);
 	}
   }
 }
@@ -146,6 +146,12 @@ function my_body_class_names( $classes ) {
   // return the $classes array
   return $classes;
 }
+
+//email scrambler
+function my_email_scrambler ($email) {
+  return str_replace('@','!WCa!',str_replace('.','!WCb!',$email));
+}
+
 
 //turn off toolset types front-end menu
 add_filter('types_information_table', '__return_false');

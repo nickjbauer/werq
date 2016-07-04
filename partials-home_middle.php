@@ -14,21 +14,21 @@
       become
       <h3>WERQ</h3>
       instructor
-      <form>
+      <form method="get" action="https://members.werqfitness.com/register/" target="_blank">
         <input type="submit" value="SIGN UP">
       </form>
     </div>
     <div class="three columns callout col3">
       <h3>WERQ<span>force</span></h3>
       members only
-      <form>
+      <form method="get" action="https://members.werqfitness.com" target="_blank">
         <input type="submit" value="LOGIN">
       </form>
     </div>
     <div class="three columns callout col4">
       <a href="//werqfitness.myshopify.com/" target="_blank"><img
           src="/wp-content/uploads/2016/05/btn_shop.jpg"></a>
-      <a href="#"><img src="/wp-content/uploads/2016/05/btn_class.jpg"></a>
+      <a href="/find-a-class/"><img src="/wp-content/uploads/2016/05/btn_class.jpg"></a>
     </div>
   </div>
 

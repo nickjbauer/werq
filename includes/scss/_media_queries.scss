@@ -8,57 +8,182 @@ Media Queries
 ==================================================*/
 
 
-
-
-/*==========  Mobile First Method  ==========*/
-
-/* Custom, iPhone Retina */
-@media only screen and (min-width : 320px) {
-
-}
-
-/* Extra Small Devices, Phones */
-@media only screen and (min-width : 480px) {
-
-}
-
-/* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
-
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
-
-}
-
-/* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
-
-}
-
-
-
 /*==========  Non-Mobile First Method  ==========*/
 
 /* Large Devices, Wide Screens */
-@media only screen and (max-width : 1200px) {
+@media only screen and (max-width : 1240px) {
+  body{
+    &.home {
+      aside {
+        //call 2-col
+        max-width: 620px;
+        @include debug4();
+        text-align: center;
 
+        //seen 1-col
+        #seen_col {
+          text-align: center;
+          .columns.seen {
+            display: block;
+            margin: 10px auto;
+            float:none;
+          }
+        }
+      }
+    }
+
+  }
 }
+
+@media only screen and (max-width : 1200px) {
+ body {
+   //events - page template tables
+   &.page-template-template-tables {
+     .nine.columns {
+       width: 100%;
+       float:none;
+     }
+
+     .three.columns {
+       margin: 25px 0 0 0;
+       width: 100%;
+       float:none;
+     }
+   }
+ }
+}
+
+//table & blog choke point
+@media only screen and (max-width : 930px) {
+  body {
+
+    h1 {
+      font-size: 1.75em;
+      line-height: 1.5em;
+    }
+
+    h2 {
+      font-size: $font-size;
+      line-height: $line-height;
+    }
+
+    .no_mobile_break {
+      color: $primary-color;
+      @include inline-block;
+    }
+
+    table {
+      //overflow-x: auto;
+      //display: block;
+
+      th {
+        display: none;
+      }
+
+      td {
+        display: block;
+        width: 100% !important;
+        border: none;
+        margin: 0;
+        padding: 0;
+
+        .register {
+          margin-top: 5px;
+        }
+      }
+
+      tr {
+        border: none;
+        border-bottom: thin solid $primary-color;
+        width: 100%;
+        padding: 10px 0;
+        display: block;
+      }
+
+      td:before {
+        content: attr(data-label);
+        float: left;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+    }
+
+    //blog
+    &.blog_pages {
+      .nine.columns {
+        width: 100%;
+        float: none;
+      }
+
+      .three.columns {
+        margin: 0;
+        padding: 25px;
+        width: 100%;
+        float: none;
+
+        //hide social media icons
+        #wysiwyg_widgets_widget-7 {
+          display: none;
+        }
+      }
+    }
+
+  }
+}
+
+
 
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
 
 }
 
+@media only screen and (max-width : 890px) {
+
+}
+
+
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
 
 }
 
+@media only screen and (max-width : 625px) {
+  body {
+    &.home {
+      aside {
+        //call out 1-col
+        .columns.callout {
+          margin: 10px auto;
+          float: none;
+        }
+      }
+    }
+  }
+}
+
+
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
+  body {
+    h1 {
+      font-size: $font-size-md;
+      line-height: $line-height-md;
+    }
 
+    h2 {
+      font-size: $font-size;
+      line-height: $line-height;
+    }
+
+
+    //bar override for blog pages
+    &.blog_pages {
+      #click-menu .threeLines .line {
+        background-color: $primary-color !important;
+      }
+    }
+  }
 }
 
 /* Custom, iPhone Retina */
