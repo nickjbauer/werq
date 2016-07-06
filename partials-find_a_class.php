@@ -83,7 +83,8 @@
 
         $city = (isset($_GET['city'])) ? $_GET['city'] : null;
         $state = (isset($_GET['state'])) ? $_GET['state'] : null ;
-        $zip = (isset($_GET['zip']))? $_GET['zip'] : null;
+        $zip = (isset($_GET['zip']))? $_GET['zip'] : '';
+
         $distance_sql = ', null as distance';
 
         if (!empty($city)) {
@@ -136,6 +137,7 @@
       <div class="row find_a_class_list">
         <div class="twelve columns">
           <h2>Search Results</h2>
+          <h3>Search results are listed in order of closest locations, then by the day of the week.</h3>
           <?php
             //execute sql based on command
             $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
@@ -170,6 +172,26 @@
             ";
             //	--and (z.Latitude BETWEEN ?-2 and ?+2) and (z.Longitude BETWEEN ?-2 and ?+2)
 
+            //day filter
+            $day = (isset($_GET['day']))? $_GET['day'] : 'NO DAY FILTER';
+
+            if (!is_null($day)) {
+              $day = strtoupper(substr(trim(filter_var($day, FILTER_SANITIZE_STRING, [FILTER_FLAG_STRIP_HIGH,FILTER_FLAG_STRIP_LOW])),0,3));
+              $day_s = '%'.$day.'%';
+            }
+
+            switch($day) {
+              case 'SUN': $sql .= " and c.day like ?"; break;
+              case 'MON': $sql .= " and c.day like ?"; break;
+              case 'TUE': $sql .= " and c.day like ?"; break;
+              case 'WED': $sql .= " and c.day like ?"; break;
+              case 'THU': $sql .= " and c.day like ?"; break;
+              case 'FRI': $sql .= " and c.day like ?"; break;
+              case 'SAT': $sql .= " and c.day like ?"; break;
+              default: $sql .= " and c.day <> ?"; break;
+            }
+
+
             //append based on filter
             switch($type) {
               case 'STATE':
@@ -187,22 +209,23 @@
                   order by distance, day_order, c.time, c.gym_name
                 ";
             }
+          //pqd($sql);
 
             $stmt = $con->prepare($sql);
 
             //append based on filter
             switch($type) {
               case 'STATE':
-                $stmt->bind_param("s", $state);
+                $stmt->bind_param("ss", $day_s,$state);
                 break;
 
               case 'CITY':
                 $city = '%'.$city.'%';
-                $stmt->bind_param("s", $city);
+                $stmt->bind_param("ss",  $day_s,$city);
                 break;
 
               default:
-                $stmt->bind_param("ddddddd", $lat,$lng,$lat,$lat,$lat,$lng,$lng);
+                $stmt->bind_param("dddsdddd", $lat,$lng,$lat,$day_s,$lat,$lat,$lng,$lng);
             }
 
             $stmt->execute();
@@ -211,6 +234,23 @@
 
             if ($stmt->num_rows > 0) {
           ?>
+              <form action="/find-a-class/find-a-cass-list/" class="filter_form day" method="get">
+                <label>Filter by Day:</label>
+                <select name="day" onchange="this.form.submit()">
+                  <option value="">No Filter</option>
+                  <option value="SUN" <?=($day=='SUN')?'selected':''?>>Sunday</option>
+                  <option value="MON" <?=($day=='MON')?'selected':''?>>Monday</option>
+                  <option value="TUE" <?=($day=='TUE')?'selected':''?>>Tuesday</option>
+                  <option value="WED" <?=($day=='WED')?'selected':''?>>Wednesday</option>
+                  <option value="THU" <?=($day=='THU')?'selected':''?>>Thursday</option>
+                  <option value="FRI" <?=($day=='FRI')?'selected':''?>>Friday</option>
+                  <option value="SAT" <?=($day=='SAT')?'selected':''?>>Saturday</option>
+                </select>
+                <input type="hidden" name="zip" value="<?=$zip?>">
+                <input type="hidden" name="city" value="<?=$city?>">
+                <input type="hidden" name="state" value="<?=$state?>">
+              </form>
+
               <table class="event_table find_a_class">
                 <tr>
                   <th>Day</th>
@@ -233,7 +273,7 @@
                 </table>
 
           <?php
-            } else { echo '<h2>Sorry No Results Found</h2>'; }
+            } else { echo '<h2>WERQ has not yet reached your area.  <a href="/bring-werq-to-your-gym/">Bring WERQ to You.</a></h2>'; }
           ?>
         </div>
       </div>
@@ -251,6 +291,7 @@
             , u.email
             , u.avatar
             , u.website
+            , u.bio
             , c.gym_name
             , c.gym_address
             , c.gym_city
@@ -267,7 +308,7 @@
       $stmt = $con->prepare($sql);
       $stmt->bind_param("i", $id);
       $stmt->execute();
-      $stmt->bind_result($fname, $lname, $instructor_email, $avatar, $website, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time);
+      $stmt->bind_result($fname, $lname, $instructor_email, $avatar, $website, $bio, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time);
       $stmt->store_result();
     ?>
       <article>
@@ -299,8 +340,11 @@
               <strong>Instructor:</strong> <?=$fname?> <?=$lname?>
             </div>
             <div class="instructor_contact">
-              <a href="mailto:<?=my_email_scrambler($instructor_email)?>?subject=WERQ Fitness : Contact Instructor">Contact Instructor</a>
+              <a href="mailto:<?=my_email_scrambler($instructor_email)?>?subject=WERQ Fitness - a message from your profile">Contact Instructor</a>
               <?php //echo do_shortcode('[contact-form-7 id="5981" title="Instructor Form"]')?>
+            </div>
+            <div class="instructor_bio">
+              <p><?=$bio?></p>
             </div>
           </div>
     <?php

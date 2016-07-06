@@ -11,10 +11,10 @@
       </form>
     </div>
     <div class="three columns callout col2">
-      become
+      become a
       <h3>WERQ</h3>
       instructor
-      <form method="get" action="https://members.werqfitness.com/register/" target="_blank">
+      <form method="get" action="/teach/">
         <input type="submit" value="SIGN UP">
       </form>
     </div>

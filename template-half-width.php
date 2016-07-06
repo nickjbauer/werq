@@ -16,7 +16,7 @@ get_header();
   ?>
     <article>
       <?php
-      if (get_the_ID() == 49) { //contact
+      if (get_the_ID() == 49 || get_the_ID() == 5987) { //contact
       ?>
         <div class="row">
           <div class="six columns">
