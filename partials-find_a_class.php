@@ -316,6 +316,7 @@
     <?php
       if ($stmt->num_rows > 0) {
         $stmt->fetch();
+        $website = 'google.com';
     ?>
           <div class="six columns">
             <div class="google-maps">
@@ -324,11 +325,11 @@
             <div class="gym_details">
               <p><strong><?= (!empty($gym)) ? $gym : ''; ?></strong></p>
               <p><?= (!empty($gym_address))? $gym_address.'<br>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></p>
-              <?php if (!empty($website)): ?>
-                <p><a href="<?=$website?>" target="_blank"><?=$website?></a></p>
-              <?php endif; ?>
               <p><?=$day?> | <?=$time?></p>
             </div>
+
+            <!-- gym notes will be here -->
+
             <div class="back_link">
               <a href="javascript:history.back();">« Back</a>
             </div>
@@ -346,6 +347,9 @@
             <div class="instructor_bio">
               <p><?=$bio?></p>
             </div>
+            <?php if (!empty($website)): ?>
+              <p><a href="<?=$website?>" target="_blank"><?=$website?></a></p>
+            <?php endif; ?>
           </div>
     <?php
       } else {
