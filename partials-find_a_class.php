@@ -316,7 +316,6 @@
     <?php
       if ($stmt->num_rows > 0) {
         $stmt->fetch();
-        $website = 'google.com';
     ?>
           <div class="six columns">
             <div class="google-maps">

@@ -21,7 +21,8 @@ get_header();
         <div class="row">
           <div class="six columns">
             <?php
-              if (!empty(get_post_meta(get_the_ID(),'form',true))) {
+              $c = !empty(get_post_meta(get_the_ID(),'form',true));
+              if ($c) {
                 echo do_shortcode(get_post_meta(get_the_ID(), 'form', true));
               }
             ?>
