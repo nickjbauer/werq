@@ -297,6 +297,7 @@
             , c.gym_city
             , c.gym_state
             , c.gym_zip
+            , c.gym_notes
             , c.day
             , c.time
           from ".MY_MEMBER_CLASS_DB_TABLE." c
@@ -308,7 +309,7 @@
       $stmt = $con->prepare($sql);
       $stmt->bind_param("i", $id);
       $stmt->execute();
-      $stmt->bind_result($fname, $lname, $instructor_email, $avatar, $website, $bio, $gym, $gym_address, $gym_city, $gym_state, $gym_zip,$day,$time);
+      $stmt->bind_result($fname, $lname, $instructor_email, $avatar, $website, $bio, $gym, $gym_address, $gym_city, $gym_state, $gym_zip, $gym_notes, $day,$time);
       $stmt->store_result();
     ?>
       <article>
@@ -326,6 +327,12 @@
               <p><?= (!empty($gym_address))? $gym_address.'<br>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></p>
               <p><?=$day?> | <?=$time?></p>
             </div>
+            <?php if (!empty($gym_notes)) { ?>
+              <div class="gym_notes">
+                <label>Gym Notes:</label>
+                <p><?=$gym_notes?></p>
+              </div>
+            <?php } ?>
 
             <!-- gym notes will be here -->
 
