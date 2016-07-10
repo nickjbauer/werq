@@ -149,7 +149,7 @@ function my_body_class_names( $classes ) {
 
 //email scrambler
 function my_email_scrambler ($email) {
-  return str_replace('@','!WCa!',str_replace('.','!WCb!',$email));
+  return str_ireplace('@','[wat]',$email);
 }
 
 

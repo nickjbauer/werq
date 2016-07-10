@@ -347,25 +347,28 @@
               <strong>Instructor:</strong> <?=$fname?> <?=$lname?>
             </div>
             <div class="instructor_contact">
-              <a href="mailto:<?=my_email_scrambler($instructor_email)?>?subject=WERQ Fitness - a message from your profile">Contact Instructor</a>
+              <a href="mailto:<?=my_email_scrambler($instructor_email)?>,info[wat2]werqfitness.com?subject=WERQ Fitness - a message from your profile">Contact Instructor</a>
               <?php //echo do_shortcode('[contact-form-7 id="5981" title="Instructor Form"]')?>
             </div>
             <div class="instructor_bio">
               <p><?=$bio?></p>
             </div>
-            <?php if (!empty($website)): ?>
+            <?php
+              if (!empty($website)):
+                if (stripos($website,'http://') === false) {
+                  $website = 'http://'.$website;
+                }
+            ?>
               <p><a href="<?=$website?>" target="_blank"><?=$website?></a></p>
             <?php endif; ?>
           </div>
     <?php
       } else {
     ?>
-
         <div class="tweleve columns not_found">
           <h2>Sorry No Profile Found</h2>
           <p><a href="/find-a-class/">Try another search</a></p>
         </div>
-
   <?php
       }
   ?>
@@ -378,11 +381,4 @@
 
 </div>
 
-<script>
-  <?
-    $sep = '!WCa!';
-    $dot = '!WCb!';
-    $suf = '!WCc!';
-  ?>
-  function hrefReplacer(e,r){for(i=0;i<=document.links.length-1;i++)-1!=document.links[i].href.indexOf(e)&&(document.links[i].href=document.links[i].href.split(e)[0]+r+document.links[i].href.split(e)[1])}function unscramble(e,r){if(0==e){var n="_atPR_";hrefReplacer(n,"@")}else{var n="<?=$sep?>",c="<?=$dot?>",i="<?=$suf?>";""==r&&(r="com"),hrefReplacer(n,"@"),hrefReplacer(c,"."),hrefReplacer(i,r)}}unscramble(0),unscramble(1,"com");
-</script>
+<script>var maildivider="[wat]";for(i=0;i<=document.links.length-1;i++)-1!=document.links[i].href.indexOf(maildivider)&&(document.links[i].href=document.links[i].href.split(maildivider)[0]+"@"+document.links[i].href.split(maildivider)[1]);var maildivider="[wat2]";for(i=0;i<=document.links.length-1;i++)-1!=document.links[i].href.indexOf(maildivider)&&(document.links[i].href=document.links[i].href.split(maildivider)[0]+"@"+document.links[i].href.split(maildivider)[1]);</script>
