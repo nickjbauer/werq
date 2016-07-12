@@ -62,7 +62,7 @@ get_header();
                 'posts_per_page' => -1,
                 'meta_key' => 'wpcf-' . $slug . '-end-date',
                 'orderby' => 'meta_value',
-                'order' => 'DESC'
+                'order' => 'ASC'
               );
 
               $loop = new WP_Query($args);
@@ -122,7 +122,7 @@ get_header();
                       $args = array(
                         'post_type' => 'event-photo-listing',
                         'posts_per_page' => -1,
-                        'order' => 'DESC'
+                        'order' => 'ASC'
                       );
 
                       $loop = new WP_Query($args);
