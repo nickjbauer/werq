@@ -9,6 +9,11 @@
 
     <div class="search_forms_container">
       <form action="/find-a-class/find-a-cass-list/" method="get">
+        <input type="text" placeholder="Search by instructor" name="instructor" maxlength="50">
+        <input type="submit" value="">
+      </form>
+
+      <form action="/find-a-class/find-a-cass-list/" method="get">
         <input type="text" placeholder="Search by city" name="city" maxlength="50">
         <input type="submit" value="">
       </form>
@@ -84,17 +89,22 @@
         $city = (isset($_GET['city'])) ? $_GET['city'] : null;
         $state = (isset($_GET['state'])) ? $_GET['state'] : null ;
         $zip = (isset($_GET['zip']))? $_GET['zip'] : '';
+        $instructor = (isset($_GET['instructor']))? $_GET['instructor'] : '';
 
         $distance_sql = ', null as distance';
 
         if (!empty($city)) {
           $type = 'CITY';
-          $city = substr(trim(filter_var($city, FILTER_SANITIZE_STRING, [FILTER_FLAG_STRIP_HIGH,FILTER_FLAG_STRIP_LOW])),0,25);
+          $city = substr(trim(filter_var($city, FILTER_SANITIZE_STRING, [FILTER_FLAG_STRIP_HIGH, FILTER_FLAG_STRIP_LOW])), 0, 25);
 
           //minimum of 3 chars
-          if (strlen($city)<3) {
+          if (strlen($city) < 3) {
             $city = '## NO DB RUN ##';
           }
+
+        } elseif (!empty($instructor)) {
+          $type = 'INSTRUCTOR';
+          $instructor = trim(filter_var($instructor, FILTER_SANITIZE_STRING, [FILTER_FLAG_STRIP_HIGH, FILTER_FLAG_STRIP_LOW]));
 
         } elseif (!empty($zip)) {
           $type = 'ZIP';
@@ -202,6 +212,10 @@
                 $sql .= " and c.gym_city like ? ORDER BY day_order, c.time, c.gym_name";
                 break;
 
+              case 'INSTRUCTOR':
+                $sql .= " and (u.fname like ? or u.lname like ?) order by u.lname, day_order, c.time, c.gym_name";
+                break;
+
               default:
                 $sql .= "
                   and (z.Latitude BETWEEN ?-2 and ?+2) and (z.Longitude BETWEEN ?-2 and ?+2)
@@ -209,19 +223,24 @@
                   order by distance, day_order, c.time, c.gym_name
                 ";
             }
-          //pqd($sql);
+            //pqd($sql);
 
             $stmt = $con->prepare($sql);
 
             //append based on filter
             switch($type) {
               case 'STATE':
-                $stmt->bind_param("ss", $day_s,$state);
+                $stmt->bind_param("ss", $day_s, $state);
                 break;
 
               case 'CITY':
                 $city = '%'.$city.'%';
-                $stmt->bind_param("ss",  $day_s,$city);
+                $stmt->bind_param("ss", $day_s, $city);
+                break;
+
+              case 'INSTRUCTOR':
+                $instructor = '%'.$instructor.'%';
+                $stmt->bind_param("sss", $day_s, $instructor, $instructor);
                 break;
 
               default:
@@ -247,12 +266,14 @@
                   <option value="SAT" <?=($day=='SAT')?'selected':''?>>Saturday</option>
                 </select>
                 <input type="hidden" name="zip" value="<?=$zip?>">
+                <input type="hidden" name="instructor" value="<?=$instructor?>">
                 <input type="hidden" name="city" value="<?=$city?>">
                 <input type="hidden" name="state" value="<?=$state?>">
               </form>
 
               <table class="event_table find_a_class">
                 <tr>
+                  <th>Instructor</th>
                   <th>Day</th>
                   <th>Time</th>
                   <th>Gym Name</th>
@@ -262,6 +283,7 @@
                 </tr>
           <?php while ($stmt->fetch()): ?>
                 <tr>
+                  <td data-label="<?= (!empty($fname) || !empty($lname)) ? 'Instructor:&nbsp;' : ''; ?>"><?= (!empty($fname) || !empty($lname)) ? $lname.', '.$fname : ''; ?></td>
                   <td data-label="<?= (!empty($day)) ? 'Day:&nbsp;' : ''; ?>"><?= (!empty($day)) ? $day : ''; ?></td>
                   <td data-label="<?= (!empty($time)) ? 'Time:&nbsp;' : ''; ?>"><?= (!empty($time)) ? $time : ''; ?></td>
                   <td data-label="<?= (!empty($gym)) ? 'Gym:&nbsp;' : ''; ?>"><?= (!empty($gym)) ? $gym : ''; ?></td>
