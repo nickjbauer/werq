@@ -301,6 +301,106 @@
       </div>
       </article>
 
+      <article>
+      <div class="row find_a_class_list">
+        <div class="twelve columns">
+          <h2>More Results:</h2>
+          <h3>The following are nearby instructors who want to start new classes:</h3>
+          <?php
+          try {
+            //execute sql based on command
+            $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
+            $sql = "
+              select distinct
+                  c.id
+                  , u.fname
+                  , u.lname
+                  , u.state
+                  , u.zip
+                  ".$distance_sql."
+              from ".MY_MEMBER_DB_TABLE." u
+              inner join ".MY_MEMBER_CLASS_DB_TABLE." c on u.id = c.user_id
+              inner join ".MY_ZIP_DB_TABLE." z on u.zip = z.zipcode
+              where u.status = 1
+            ";
+            //append based on filter
+            switch($type) {
+              case 'STATE':
+                $sql .= ' and u.state = ?';
+                break;
+
+              case 'CITY':
+                $sql .= " and u.city like ?";
+                break;
+
+              case 'INSTRUCTOR':
+                $sql .= " and (u.fname like ? or u.lname like ?) order by u.lname";
+                break;
+
+              default:
+                $sql .= "
+                  and (z.Latitude BETWEEN ?-2 and ?+2) and (z.Longitude BETWEEN ?-2 and ?+2)
+                  having distance < 75
+                  order by distance
+                ";
+            }
+            $stmt = $con->prepare($sql);
+
+            //append based on filter
+            switch($type) {
+              case 'STATE':
+                $stmt->bind_param("s", $state);
+                break;
+
+              case 'CITY':
+                $city = '%'.$city.'%';
+                $stmt->bind_param("s", $city);
+                break;
+
+              case 'INSTRUCTOR':
+                $instructor = '%'.$instructor.'%';
+                $stmt->bind_param("ss", $instructor, $instructor);
+                break;
+
+              default:
+                $stmt->bind_param("ddddddd", $lat,$lng,$lat,$lat,$lat,$lng,$lng);
+            }
+
+            $stmt->execute();
+            $stmt->bind_result($id, $fname, $lname, $instructor_state, $instructor_zip, $distance);
+            $stmt->store_result();
+
+            if ($stmt->num_rows > 0) {
+          ?>
+              <table class="event_table find_a_class">
+                <tr>
+                  <th>Instructor</th>
+                  <th>State</th>
+                  <th>Zipcode</th>
+                  <th>Register</th>
+                </tr>
+          <?php while ($stmt->fetch()): ?>
+                <tr>
+                  <td data-label="<?= (!empty($fname) || !empty($lname)) ? 'Instructor:&nbsp;' : ''; ?>"><?= (!empty($fname) || !empty($lname)) ? $lname.', '.$fname : ''; ?></td>
+                  <td data-label="<?= (!empty($instructor_state)) ? 'State:&nbsp;' : ''; ?>"><?= (!empty($instructor_state)) ? $instructor_state : ''; ?></td>
+                  <td data-label="<?= (!empty($instructor_zip)) ? 'Zipcode:&nbsp;' : ''; ?>"><?= (!empty($instructor_zip)) ? $instructor_zip : ''; ?></td>
+                  <td data-label=""><?= (!empty($id)) ? '<a href="/find-a-class-detail/?id=' . encrypt_decrypt_api('encrypt',$id) . '"><div class="register">More Info</div></a>' : ''; ?></td>
+                </tr>
+          <?php endwhile; ?>
+                </table>
+
+          <?php
+        } else { echo '<h2>No intructors found nearby.  Call our staff to get help you get to WERQ!</h2>'; }
+          } catch (Exception $e) {
+            // do nothing.  ideally we'd report this to the webadmin, but for now...
+            var_dump($e);
+          }
+          ?>
+
+        </div>
+      </div>
+    </article>
+
   <?php
       break;
       case 5970: //detail
