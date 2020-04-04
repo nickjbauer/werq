@@ -121,6 +121,14 @@ function my_find_a_class () {
   return false;
 }
 
+function my_find_a_virtual_class () {
+  if (is_page([39,5968,5970])) {
+	return true;
+  }
+
+  return false;
+}
+
 //return blog post only for search
 function my_search_blog_post_only( $query ) {
   if ( $query->is_search ) {

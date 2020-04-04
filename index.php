@@ -22,6 +22,8 @@
         //see if general page or event page
         if (my_find_a_class()) {
           get_template_part('partials', 'find_a_class');
+        } else if(my_find_a_virtual_class()) {
+          get_template_part('partials', 'find_a_virtual_class');
         } else {
           get_template_part('partials', 'page');
         }
