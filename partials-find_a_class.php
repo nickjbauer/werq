@@ -301,106 +301,206 @@
       </div>
       </article>
 
-  <?php
-      break;
-      case 5970: //detail
-        $id = (int) encrypt_decrypt_api('decrypt',$_GET['id']);
-        $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
-        $sql = "
-          select
-            u.fname
-            , u.lname
-            , u.email
-            , u.avatar
-            , u.website
-            , u.bio
-            , c.gym_name
-            , c.gym_address
-            , c.gym_city
-            , c.gym_state
-            , c.gym_zip
-            , c.gym_notes
-            , c.day
-            , c.time
-          from ".MY_MEMBER_CLASS_DB_TABLE." c
-          inner join ".MY_MEMBER_DB_TABLE." u on c.user_id = u.id
-          where c.id = ?
-          limit 1
-        ";
 
-      $stmt = $con->prepare($sql);
-      $stmt->bind_param("i", $id);
-      $stmt->execute();
-      $stmt->bind_result($fname, $lname, $instructor_email, $avatar, $website, $bio, $gym, $gym_address, $gym_city, $gym_state, $gym_zip, $gym_notes, $day,$time);
-      $stmt->store_result();
-    ?>
       <article>
-      <div class="row find_a_class_detail">
-    <?php
-      if ($stmt->num_rows > 0) {
-        $stmt->fetch();
-    ?>
-          <div class="six columns">
-            <div class="google-maps">
-              <iframe src="https://maps.google.com/maps?f=q&hl=en&geocode=&q= <?=$gym_address?> <?=$gym_city?>, <?=$gym_state?> <?=$gym_zip?>&ie=UTF8&z=14&output=embed" width="600" height="450" frameborder="0"></iframe>
-            </div>
-            <div class="gym_details">
-              <p><strong><?= (!empty($gym)) ? $gym : ''; ?></strong></p>
-              <p><?= (!empty($gym_address))? $gym_address.'<br>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></p>
-              <p><?=$day?> | <?=$time?></p>
-            </div>
-            <?php if (!empty($gym_notes)) { ?>
-              <div class="gym_notes">
-                <label>Gym Notes:</label>
-                <p><?=$gym_notes?></p>
-              </div>
-            <?php } ?>
+      <div class="row find_a_class_list">
+        <div class="twelve columns">
+          <h2>More Results:</h2>
+          <h3>The following are nearby instructors who want to start new classes:</h3>
+          <?php
+          try {
+            //execute sql based on command
+            $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
+            $sql = "
+              select distinct
+                  c.id
+                  , u.fname
+                  , u.lname
+                  , u.state
+                  , u.zip
+                  ".$distance_sql."
+              from ".MY_MEMBER_DB_TABLE." u
+              inner join ".MY_MEMBER_CLASS_DB_TABLE." c on u.id = c.user_id
+              inner join ".MY_ZIP_DB_TABLE." z on u.zip = z.zipcode
+              where u.status = 1
+            ";
+            //append based on filter
+            switch($type) {
+              case 'STATE':
+                $sql .= ' and u.state = ?';
+                break;
 
-            <!-- gym notes will be here -->
+              case 'CITY':
+                $sql .= " and u.city like ?";
+                break;
 
-            <div class="back_link">
-              <a href="javascript:history.back();">« Back</a>
-            </div>
-          </div>
+              case 'INSTRUCTOR':
+                $sql .= " and (u.fname like ? or u.lname like ?) order by u.lname";
+                break;
 
-          <div class="five columns offset-by-one">
-            <div class="avatar"><img src="<?= (!empty($avatar))? '//members.werqfitness.com/uploads/'.$avatar:'/wp-content/uploads/2016/04/Original_RGB_800px-1-300x188.jpg' ?>"></div>
-            <div class="instructor_detail">
-              <strong>Instructor:</strong> <?=$fname?> <?=$lname?>
-            </div>
-            <div class="instructor_contact">
-              <a href="mailto:<?=my_email_scrambler($instructor_email)?>,info[wat2]werqfitness.com?subject=WERQ Fitness - a message from your profile">Contact Instructor</a>
-              <?php //echo do_shortcode('[contact-form-7 id="5981" title="Instructor Form"]')?>
-            </div>
-            <div class="instructor_bio">
-              <p><?=$bio?></p>
-            </div>
-            <?php
-              if (!empty($website)):
-                if (stripos($website,'http://') === false) {
-                  $website = 'http://'.$website;
-                }
-            ?>
-              <p><a href="<?=$website?>" target="_blank"><?=$website?></a></p>
-            <?php endif; ?>
-          </div>
-    <?php
-      } else {
-    ?>
-        <div class="tweleve columns not_found">
-          <h2>Sorry No Profile Found</h2>
-          <p><a href="/find-a-class/">Try another search</a></p>
+              default:
+                $sql .= "
+                  and (z.Latitude BETWEEN ?-2 and ?+2) and (z.Longitude BETWEEN ?-2 and ?+2)
+                  having distance < 75
+                  order by distance
+                ";
+            }
+            $stmt = $con->prepare($sql);
+
+            //append based on filter
+            switch($type) {
+              case 'STATE':
+                $stmt->bind_param("s", $state);
+                break;
+
+              case 'CITY':
+                $city = '%'.$city.'%';
+                $stmt->bind_param("s", $city);
+                break;
+
+              case 'INSTRUCTOR':
+                $instructor = '%'.$instructor.'%';
+                $stmt->bind_param("ss", $instructor, $instructor);
+                break;
+
+              default:
+                $stmt->bind_param("ddddddd", $lat,$lng,$lat,$lat,$lat,$lng,$lng);
+            }
+
+            $stmt->execute();
+            $stmt->bind_result($id, $fname, $lname, $instructor_state, $instructor_zip, $distance);
+            $stmt->store_result();
+
+            if ($stmt->num_rows > 0) {
+          ?>
+              <table class="event_table find_a_class">
+                <tr>
+                  <th>Instructor</th>
+                  <th>State</th>
+                  <th>Zipcode</th>
+                  <th>Register</th>
+                </tr>
+          <?php while ($stmt->fetch()): ?>
+                <tr>
+                  <td data-label="<?= (!empty($fname) || !empty($lname)) ? 'Instructor:&nbsp;' : ''; ?>"><?= (!empty($fname) || !empty($lname)) ? $lname.', '.$fname : ''; ?></td>
+                  <td data-label="<?= (!empty($instructor_state)) ? 'State:&nbsp;' : ''; ?>"><?= (!empty($instructor_state)) ? $instructor_state : ''; ?></td>
+                  <td data-label="<?= (!empty($instructor_zip)) ? 'Zipcode:&nbsp;' : ''; ?>"><?= (!empty($instructor_zip)) ? $instructor_zip : ''; ?></td>
+                  <td data-label=""><?= (!empty($id)) ? '<a href="/find-a-class-detail/?id=' . encrypt_decrypt_api('encrypt',$id) . '"><div class="register">More Info</div></a>' : ''; ?></td>
+                </tr>
+          <?php endwhile; ?>
+                </table>
+
+          <?php
+        } else { echo '<h2>No intructors found nearby.  Call our staff to get help you get to WERQ!</h2>'; }
+          } catch (Exception $e) {
+            // do nothing.  ideally we'd report this to the webadmin, but for now...
+            var_dump($e);
+          }
+          ?>
+
         </div>
-  <?php
-      }
-  ?>
       </div>
-      </article>
-  <?php
-    break;
-  endswitch;
-  ?>
+    </article>
 
+    <?php
+        break;
+        case 5970: //detail
+          $id = (int) encrypt_decrypt_api('decrypt',$_GET['id']);
+          $con=mysqli_connect(MY_DB_HOST,MY_DB_USER,MY_DB_PASSWORD,MY_DB_DATABASE);
+          $sql = "
+            select
+              u.fname
+              , u.lname
+              , u.email
+              , u.avatar
+              , u.website
+              , u.bio
+              , c.gym_name
+              , c.gym_address
+              , c.gym_city
+              , c.gym_state
+              , c.gym_zip
+              , c.gym_notes
+              , c.day
+              , c.time
+            from ".MY_MEMBER_CLASS_DB_TABLE." c
+            inner join ".MY_MEMBER_DB_TABLE." u on c.user_id = u.id
+            where c.id = ?
+            limit 1
+          ";
+
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->bind_result($fname, $lname, $instructor_email, $avatar, $website, $bio, $gym, $gym_address, $gym_city, $gym_state, $gym_zip, $gym_notes, $day,$time);
+        $stmt->store_result();
+      ?>
+        <article>
+        <div class="row find_a_class_detail">
+      <?php
+        if ($stmt->num_rows > 0) {
+          $stmt->fetch();
+      ?>
+            <div class="six columns">
+              <div class="google-maps">
+                <iframe src="https://maps.google.com/maps?f=q&hl=en&geocode=&q= <?=$gym_address?> <?=$gym_city?>, <?=$gym_state?> <?=$gym_zip?>&ie=UTF8&z=14&output=embed" width="600" height="450" frameborder="0"></iframe>
+              </div>
+              <div class="gym_details">
+                <p><strong><?= (!empty($gym)) ? $gym : ''; ?></strong></p>
+                <p><?= (!empty($gym_address))? $gym_address.'<br>'.$gym_city.', '.$gym_state.' '.$gym_zip : $gym_city.', '.$gym_state.' '.$gym_zip; ?></p>
+                <p><?=$day?> | <?=$time?></p>
+              </div>
+              <?php if (!empty($gym_notes)) { ?>
+                <div class="gym_notes">
+                  <label>Gym Notes:</label>
+                  <p><?=$gym_notes?></p>
+                </div>
+              <?php } ?>
+
+              <!-- gym notes will be here -->
+
+              <div class="back_link">
+                <a href="javascript:history.back();">« Back</a>
+              </div>
+            </div>
+
+            <div class="five columns offset-by-one">
+              <div class="avatar"><img src="<?= (!empty($avatar))? '//members.werqfitness.com/uploads/'.$avatar:'/wp-content/uploads/2016/04/Original_RGB_800px-1-300x188.jpg' ?>"></div>
+              <div class="instructor_detail">
+                <strong>Instructor:</strong> <?=$fname?> <?=$lname?>
+              </div>
+              <div class="instructor_contact">
+                <a href="mailto:<?=my_email_scrambler($instructor_email)?>,info[wat2]werqfitness.com?subject=WERQ Fitness - a message from your profile">Contact Instructor</a>
+                <?php //echo do_shortcode('[contact-form-7 id="5981" title="Instructor Form"]')?>
+              </div>
+              <div class="instructor_bio">
+                <p><?=$bio?></p>
+              </div>
+              <?php
+                if (!empty($website)):
+                  if (stripos($website,'http://') === false) {
+                    $website = 'http://'.$website;
+                  }
+              ?>
+                <p><a href="<?=$website?>" target="_blank"><?=$website?></a></p>
+              <?php endif; ?>
+            </div>
+      <?php
+        } else {
+      ?>
+          <div class="tweleve columns not_found">
+            <h2>Sorry No Profile Found</h2>
+            <p><a href="/find-a-class/">Try another search</a></p>
+          </div>
+    <?php
+        }
+    ?>
+        </div>
+        </article>
+    <?php
+      break;
+    endswitch;
+    ?>
 </div>
 
 <script>var maildivider="[wat]";for(i=0;i<=document.links.length-1;i++)-1!=document.links[i].href.indexOf(maildivider)&&(document.links[i].href=document.links[i].href.split(maildivider)[0]+"@"+document.links[i].href.split(maildivider)[1]);var maildivider="[wat2]";for(i=0;i<=document.links.length-1;i++)-1!=document.links[i].href.indexOf(maildivider)&&(document.links[i].href=document.links[i].href.split(maildivider)[0]+"@"+document.links[i].href.split(maildivider)[1]);</script>
